@@ -6,6 +6,15 @@ import MenuItem from 'material-ui/MenuItem'
 
 const categories = ['React', 'Redux', 'Udacity']
 
+const style = {
+  height: 100,
+  width: 100,
+  margin: 20,
+  textAlign: 'center',
+  display: 'inline-block',
+};
+
+
 class AddPost extends Component{
   state = {
     value: [],
@@ -30,30 +39,27 @@ class AddPost extends Component{
 
     return (
       <div>
-        <h1>New post</h1>
+        <h2>New post</h2>
         <div>
           <TextField
-            name="title*"
             floatingLabelText="Title"
+            type="text"
           /><br />
           <TextField
-            name="author*"
             floatingLabelText="Author"
-          /><br />
-          <TextField
-            name="text*"
-            floatingLabelText="Text"
+            type="text"
           /><br />
           <SelectField
-            // multiple={true}
             hintText="Post category"
             value={value}
             onChange={this.handleChange}
-          >
-            {this.menuItems(value)}
-          </SelectField><br />
+          >{this.menuItems(value)}</SelectField><br />
+          <TextField
+            multiLine={true}
+            floatingLabelText="Text"
+            type="text"
+          /><br />
         </div>
-
         <div>
           <FlatButton
             label="Submit"
