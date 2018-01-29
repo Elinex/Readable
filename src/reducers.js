@@ -8,7 +8,7 @@ import {
    comments: {}
  }
 
- function categories (state = initialState, action){
+ function categories(state = initialState, action){
    switch (action.type){
      case ADD_CATEGORIES:
        return {
