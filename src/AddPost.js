@@ -3,8 +3,6 @@ import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-import * as dataAPI from './dataAPI'
-import { addCategories } from './actions'
 import { connect } from 'react-redux'
 
 class AddPost extends Component{
@@ -12,29 +10,24 @@ class AddPost extends Component{
     value: [],
   }
 
-  componentWillMount (){
-    dataAPI.getCategories().then(res => {
-      this.props.dispatch(addCategories(res.categories))
-    })
-  }
-
   handleChange = (event, index, value) => this.setState({value})
 
   menuItems(value) {
     return this.props.categories.map((category) => (
       <MenuItem
-        key={category.name}
+        key={category}
         insetChildren={true}
-        checked={value && value.indexOf(category.name) > -1}
-        value={category.name}
-        primaryText={category.name}
+        checked={value && value.indexOf(category) > -1}
+        value={category}
+        primaryText={category}
       />
     ))
   }
 
   render(){
     const {value} = this.state
-    
+    console.log("this.props in AddPost:", this.props);
+
     return (
       <div>
         <h2>New post</h2>
@@ -71,7 +64,9 @@ class AddPost extends Component{
 
 function mapStateToProps(state){
   return {
-    categories: state.categories
+    categories: state.categories.reduce((acc, cur) => {
+      return acc.concat(cur.name)
+    }, [])
   }
 }
 

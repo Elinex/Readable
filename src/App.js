@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import './App.css'
 import AddPost from './AddPost'
+import * as dataAPI from './dataAPI'
+import { addCategories } from './actions'
+import { connect } from 'react-redux'
 
 
 class App extends Component {
+  componentWillMount (){
+    dataAPI.getCategories().then(res => {
+      this.props.dispatch(addCategories(res.categories))
+    })
+  }
 
   render() {
+    console.log("this props in App:", this.props);
 
     return (
       <div className="App">
@@ -18,4 +27,10 @@ class App extends Component {
   }
 }
 
-export default App
+function mapStateToProps(state){
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStateToProps)(App);

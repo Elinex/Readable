@@ -11,7 +11,7 @@ import categories from './reducers'
 const store = createStore(categories,
 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-console.log(store)
+console.log(store.getState())
 
 ReactDOM.render(
   <Provider store={store}>
