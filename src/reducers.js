@@ -1,15 +1,11 @@
 import { ADD_CATEGORIES, ADD_POST } from './actions'
 import { combineReducers } from 'redux'
 
-const initialState = {
-  categories: [],
-  posts: {},
-  comments: {}
-}
-
-const categories = (state = initialState, action) => {
-  switch (action.type){
+const categories = (state = [], action) => {
+  switch (action.type) {
     case ADD_CATEGORIES:
+    console.log("state is:", state);
+    console.log("action.categoriesList:", action.categoriesList);
       return {
         ...state,
         categories: action.categoriesList
@@ -19,12 +15,12 @@ const categories = (state = initialState, action) => {
   }
 }
 
-const posts = (state = initialState, action) => {
-  switch (action.type){
+const posts = (state = {}, action) => {
+  switch (action.type) {
     case ADD_POST:
       return {
-        ...state,
-        posts: action.postData
+          ...state,
+          posts: action.postData
       }
     default:
       return state

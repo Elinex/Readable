@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 
 class App extends Component {
-  componentWillMount (){
+  componentDidMount (){
     dataAPI.getCategories().then(res => {
       this.props.dispatch(addCategories(res.categories))
     })
