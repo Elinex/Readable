@@ -6,22 +6,16 @@ const categories = (state = [], action) => {
     case ADD_CATEGORIES:
     console.log("state is:", state);
     console.log("action.categoriesList:", action.categoriesList);
-      return {
-        ...state,
-        categories: action.categoriesList
-      }
+      return action.categoriesList
     default:
       return state
   }
 }
 
-const posts = (state = {}, action) => {
+const posts = (state = [], action) => {
   switch (action.type) {
     case ADD_POST:
-      return {
-          ...state,
-          posts: action.postData
-      }
+      return action.postData
     default:
       return state
   }
