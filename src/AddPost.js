@@ -64,7 +64,9 @@ class AddPost extends Component{
 
 function mapStateToProps(state){
   return {
-    categories: state.categories
+    categories: state.categories.reduce((acc, cur) => {
+      return acc.concat(cur.name)
+    }, [])
   }
 }
 
