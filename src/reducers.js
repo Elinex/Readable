@@ -1,6 +1,5 @@
-import {
-  ADD_CATEGORIES
-} from './actions'
+import { ADD_CATEGORIES, ADD_POST } from './actions'
+import { combineReducers } from 'redux'
 
 const initialState = {
   categories: [],
@@ -8,7 +7,7 @@ const initialState = {
   comments: {}
 }
 
-function categories(state = initialState, action){
+const categories = (state = initialState, action) => {
   switch (action.type){
     case ADD_CATEGORIES:
       return {
@@ -20,4 +19,21 @@ function categories(state = initialState, action){
   }
 }
 
-export default categories
+const posts = (state = initialState, action) => {
+  switch (action.type){
+    case ADD_POST:
+      return {
+        ...state,
+        posts: action.postData
+      }
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({
+  categories,
+  posts
+})
+
+export default rootReducer
