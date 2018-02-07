@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 class AddPost extends Component{
   state = {
@@ -60,6 +61,10 @@ class AddPost extends Component{
       </div>
     )
   }
+}
+
+AddPost.propTypes = {
+  categories: PropTypes.array.isRequired,
 }
 
 function mapStateToProps(state){
