@@ -4,8 +4,6 @@ import { combineReducers } from 'redux'
 const categories = (state = [], action) => {
   switch (action.type) {
     case ADD_CATEGORIES:
-    console.log("state is:", state);
-    console.log("action.categoriesList:", action.categoriesList);
       return action.categoriesList
     default:
       return state
