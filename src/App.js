@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import AddPost from './AddPost'
 import * as dataAPI from './dataAPI'
-import { addCategories } from './actions'
+import { addCategories, addPost } from './actions'
 import { connect } from 'react-redux'
 
 
@@ -11,11 +11,12 @@ class App extends Component {
     dataAPI.getCategories().then(res => {
       this.props.dispatch(addCategories(res.categories))
     })
+    dataAPI.getPosts().then(res =>{
+      this.props.dispatch(addPost(res))
+    })
   }
 
   render() {
-    console.log("this.props in App:", this.props);
-
     return (
       <div className="App">
         <header className="App-header">

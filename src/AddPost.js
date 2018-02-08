@@ -6,39 +6,16 @@ import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import * as dataAPI from './dataAPI'
+import { guid } from './helpers'
+import { addPost } from './actions'
 
 class AddPost extends Component{
   state = {
     value: [],
     title: '',
     author: '',
-    textBody: '',
-    posts: []
+    textBody: ''
   }
-
-  // posts[post.id] = {
-  //   id: post.id,
-  //   timestamp: post.timestamp,
-  //   title: post.title,
-  //   body: post.body,
-  //   author: post.author,
-  //   category: post.category,
-  //   voteScore: 1,
-  //   deleted: false,
-  //   commentCount: 0
-  // }
-  //
-  // "8xf0y6ziyjabvozdd253nd": {
-  //   id: '8xf0y6ziyjabvozdd253nd',
-  //   timestamp: 1467166872634,
-  //   title: 'Udacity is the best place to learn React',
-  //   body: 'Everyone says so after all.',
-  //   author: 'thingtwo',
-  //   category: 'react',
-  //   voteScore: 6,
-  //   deleted: false,
-  //   commentCount: 2
-  // }
 
   handleChange = (event, index, value) => this.setState({value})
 
@@ -54,21 +31,32 @@ class AddPost extends Component{
     ))
   }
 
-  handleClick = () => {
-    console.log("Estou carregando:",  this.state.value, this.state.title, this.state.author, this.state.textBody);
-  }
-
-  componentDidMount (){
-    dataAPI.addPost().then(res => {
-      console.log('this is response from API addPost:', res);
+  createPost = () => {
+    const newPost = {
+      id: guid(),
+      timestamp: Date.now(),
+      title: this.state.title,
+      body: this.state.textBody,
+      author: this.state.author,
+      category: this.state.value,
+    }
+    dataAPI.postPost(newPost).then(res => {
+      this.props.dispatch(addPost(res))
     })
   }
 
+  handleClick = () => {
+    if ((this.state.value.length === 0) || !this.state.title || !this.state.author || !this.state.textBody){
+      alert("Fill in all form fields")
+    } else {
+      this.createPost()
+      alert("Post created with success!")
+    }
+  }
 
   render(){
     const {value} = this.state
-    console.log("this.props in AddPost:", this.props);
-    console.log(this.state);
+    console.log(this.props);
 
     return (
       <div>
@@ -114,9 +102,11 @@ AddPost.propTypes = {
 
 function mapStateToProps(state){
   return {
+    ...state,
     categories: state.categories.reduce((acc, cur) => {
       return acc.concat(cur.name)
-    }, [])
+    }, []),
+    posts: state.posts
   }
 }
 

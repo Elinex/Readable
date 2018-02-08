@@ -8,9 +8,9 @@ export function addCategories(categoriesList) {
   }
 }
 
-export function addPost(postData) {
+export function addPost(postsList) {
   return {
     type: ADD_POST,
-    postData
+    postsList
   }
 }

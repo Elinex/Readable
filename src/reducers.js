@@ -13,7 +13,7 @@ const categories = (state = [], action) => {
 const posts = (state = [], action) => {
   switch (action.type) {
     case ADD_POST:
-      return action.postData
+      return action.postsList
     default:
       return state
   }
