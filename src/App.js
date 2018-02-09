@@ -4,7 +4,8 @@ import AddPost from './AddPost'
 import * as dataAPI from './dataAPI'
 import { addCategories, addPost } from './actions'
 import { connect } from 'react-redux'
-
+import { Route, Link } from 'react-router-dom'
+import Post from './Post'
 
 class App extends Component {
   componentDidMount (){
@@ -17,12 +18,50 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
+
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Readout</h1>
         </header>
-        <AddPost />
+
+        <Route exact path='/'
+          render={() => (
+            <div>
+              <div>MainView</div>
+              <Link to='/addPost' className="btn btn-secondary btn-sm">Add a post</Link>
+            </div>
+          )}
+        />
+
+        <Route exact path='/addPost'
+          render={() => (
+            <AddPost />
+          )}
+        />
+
+        {this.props.categories.map(category => (
+          <Route exact path={`/${category.name}`}
+            key={category.name}
+            render={() => (
+              <div>
+                {this.props.posts.filter(post => (post.category === category.name)).map(post => (
+                  <Post
+                    key={post.id}
+                    title={post.title}
+                    timestamp={post.timestamp}
+                    body={post.body}
+                    author={post.author}
+                    category={post.category}
+                    commentCount={post.commentCount}
+                    voteScore={post.voteScore}
+                  />
+                ))}
+              </div>
+            )}
+          />
+        ))}
       </div>
     )
   }
