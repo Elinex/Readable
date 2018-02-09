@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import * as dataAPI from './dataAPI'
 import { guid } from './helpers'
 import { addPost } from './actions'
+import { Link } from 'react-router-dom'
 
 class AddPost extends Component{
   state = {
@@ -91,6 +92,7 @@ class AddPost extends Component{
             onClick={this.handleClick}
           />
         </div>
+        <Link to='/'>Go to MainView</Link>
       </div>
     )
   }
