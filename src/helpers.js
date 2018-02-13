@@ -6,3 +6,8 @@ export function guid(){
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
 }
+
+export function dateToString(date){
+  const d = new Date(date)
+  return d.toString()
+}

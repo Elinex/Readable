@@ -1,27 +1,17 @@
 import React, { Component } from 'react'
-// import { connect } from 'react-redux'
-// import { Link } from 'react-router-dom'
 import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import Avatar from 'material-ui/Avatar'
-
-// key={post.id}
-// title={post.title}
-// timestamp={post.timestamp}
-// body={post.body}
-// author={post.author}
-// category={post.category}
-// commentCount={post.commentCount}
-// voteScore={post.voteScore}
+import { dateToString } from './helpers'
 
 class Post extends Component{
   render (){
-    console.log(this.props);
+
     return (
       <Card>
         <CardHeader
           title={this.props.author}
-          subtitle={Date(this.props.timestamp).slice(0,15)}
+          subtitle={dateToString(this.props.timestamp).slice(0, 15)}
           titleColor={'pink'}
           subtitleColor={'pink'}
           avatar={
