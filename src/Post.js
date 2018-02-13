@@ -42,6 +42,11 @@ class Post extends Component{
           <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="Remove" />
           <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="New Comment" />
         </CardActions>
+        <CardText
+          color={'grey'}
+        >
+          {this.props.commentCount} comments
+        </CardText>
       </Card>
     )
   }
