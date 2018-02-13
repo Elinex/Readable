@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 // import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
-import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
+import Avatar from 'material-ui/Avatar'
 
 // key={post.id}
 // title={post.title}
@@ -21,18 +22,28 @@ class Post extends Component{
         <CardHeader
           title={this.props.author}
           subtitle={Date(this.props.timestamp).slice(0,15)}
-          avatar="images/jsa-128.jpg"
+          titleColor={'#888888'}
+          subtitleColor={'#888888'}
+          avatar={
+            <Avatar backgroundColor={'pink'}>
+              <div>
+                <div style={{fontSize: 8}}>
+                  Score
+                </div>
+                <div style={{fontSize: 14}}>
+                  {this.props.voteScore}
+                </div>
+              </div>
+            </Avatar>}
         />
-        {/* <CardMedia
-          overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-        >
-          <img src="images/nature-600-337.jpg" alt="" />
-        </CardMedia> */}
         <CardTitle
           title={this.props.title}
           subtitle={`posted in ${this.props.category} category`}
+          titleStyle={{fontSize: 18}}
         />
-        <CardText>
+        <CardText
+          // style={}
+        >
           {this.props.body}
         </CardText>
         <CardActions>
