@@ -29,7 +29,21 @@ class App extends Component {
         <Route exact path='/'
           render={() => (
             <div>
-              <div>MainView</div>
+              <div>MAIN PAGE</div>
+              {this.props.posts.map(post => {
+                return (
+                  <Post
+                    key={post.id}
+                    title={post.title}
+                    timestamp={post.timestamp}
+                    body={post.body}
+                    author={post.author}
+                    category={post.category}
+                    commentCount={post.commentCount}
+                    voteScore={post.voteScore}
+                  />
+                )
+              })}
               <Link to='/addPost' className="btn btn-secondary btn-sm">Add a post</Link>
             </div>
           )}
@@ -46,6 +60,7 @@ class App extends Component {
             key={category.name}
             render={() => (
               <div>
+                <div>POSTS BY CATEGORY</div>
                 {this.props.posts.filter(post => (post.category === category.name)).map(post => (
                   <Post
                     key={post.id}
