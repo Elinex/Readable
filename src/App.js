@@ -6,6 +6,7 @@ import { addCategories, addPost } from './actions'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import Post from './Post'
+import sortBy from 'sort-by'
 
 class App extends Component {
   componentDidMount (){
@@ -15,10 +16,21 @@ class App extends Component {
     dataAPI.getPosts().then(res =>{
       this.props.dispatch(addPost(res))
     })
+
   }
 
+  // sortPosts = (value) => {
+  //   this.setState({
+  //     posts: this.state.posts.sort(sortBy(value))
+  //   })
+  // }
+
+
   render() {
-    console.log(this.props);
+    console.log(this.props)
+
+    this.props.posts.sort(sortBy('-voteScore'))
+    
     return (
 
       <div className="App">
@@ -44,7 +56,7 @@ class App extends Component {
                   />
                 )
               })}
-              <Link to='/addPost' className="btn btn-secondary btn-sm">Add a post</Link>
+              <Link to='/addPost' className="btn btn-secondary btn-sm">NEW POST</Link>
             </div>
           )}
         />
