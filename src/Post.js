@@ -22,8 +22,8 @@ class Post extends Component{
         <CardHeader
           title={this.props.author}
           subtitle={Date(this.props.timestamp).slice(0,15)}
-          titleColor={'#888888'}
-          subtitleColor={'#888888'}
+          titleColor={'pink'}
+          subtitleColor={'pink'}
           avatar={
             <Avatar backgroundColor={'pink'}>
               <div>
@@ -40,16 +40,17 @@ class Post extends Component{
           title={this.props.title}
           subtitle={`posted in ${this.props.category} category`}
           titleStyle={{fontSize: 18}}
+          titleColor={'grey'}
         />
         <CardText
-          // style={}
+          color={'grey'}
         >
           {this.props.body}
         </CardText>
-        <CardActions>
-          <FlatButton label="Edit" />
-          <FlatButton label="Remove" />
-          <FlatButton label="New Comment" />
+        <CardActions >
+          <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="Edit" />
+          <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="Remove" />
+          <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="New Comment" />
         </CardActions>
       </Card>
     )
