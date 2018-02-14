@@ -1,4 +1,4 @@
-import { ADD_CATEGORIES, ADD_POST } from './actions'
+import { ADD_CATEGORIES, ADD_POST, ADD_COMMENTS } from './actions'
 import { combineReducers } from 'redux'
 
 const categories = (state = [], action) => {
@@ -19,9 +19,19 @@ const posts = (state = [], action) => {
   }
 }
 
+const comments = (state = [], action) => {
+  switch (action.type) {
+    case ADD_COMMENTS:
+      return action.commentsList
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   categories,
-  posts
+  posts,
+  comments
 })
 
 export default rootReducer
