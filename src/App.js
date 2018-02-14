@@ -7,30 +7,44 @@ import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import Post from './Post'
 import sortBy from 'sort-by'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 
 class App extends Component {
-  componentDidMount (){
+  state = {
+    valueSortPosts: 1,
+    valueCategory: 'none'
+  }
+
+  componentDidMount(){
+    this.props.posts.sort(sortBy('-voteScore'))
+  }
+
+  componentWillMount (){
     dataAPI.getCategories().then(res => {
       this.props.dispatch(addCategories(res.categories))
     })
     dataAPI.getPosts().then(res =>{
       this.props.dispatch(addPost(res))
     })
-
   }
 
-  // sortPosts = (value) => {
-  //   this.setState({
-  //     posts: this.state.posts.sort(sortBy(value))
-  //   })
-  // }
+  sortPosts = (option, value) => {
+    this.setState({
+      valueSortPosts: value
+    })
+    this.props.posts.sort(sortBy(option))
+  }
 
+  changeCategory = (value) => {
+    this.setState({
+      valueCategory: value
+    })
+  }
 
   render() {
-    console.log(this.props)
 
-    this.props.posts.sort(sortBy('-voteScore'))
-    
     return (
 
       <div className="App">
@@ -41,7 +55,17 @@ class App extends Component {
         <Route exact path='/'
           render={() => (
             <div>
-              <div>MAIN PAGE</div>
+              <Toolbar>
+                <ToolbarGroup>
+                  <DropDownMenu value={this.state.valueSortPosts}>
+                    <MenuItem value={1} primaryText="Sort posts by" disabled={true}/>
+                    <MenuItem value={2} primaryText="Recently posted" onClick={() => this.sortPosts('-timestamp', 2)}/>
+                    <MenuItem value={3} primaryText="Most commented" onClick={() => this.sortPosts('-commentCount', 3)}/>
+                    <MenuItem value={4} primaryText="Highest score" onClick={() => this.sortPosts('-voteScore', 4)}/>
+                  </DropDownMenu>
+                </ToolbarGroup>
+              </Toolbar>
+
               {this.props.posts.map(post => {
                 return (
                   <Post
@@ -57,6 +81,22 @@ class App extends Component {
                 )
               })}
               <Link to='/addPost' className="btn btn-secondary btn-sm">NEW POST</Link>
+
+              <Toolbar>
+                <ToolbarGroup firstChild={true}>
+                  <DropDownMenu value={this.state.valueCategory} >
+                    <MenuItem value={'none'} primaryText="Posts by category" />
+                    {this.props.categories.map(category => {
+                      return (
+                        <MenuItem key={category.name} children={
+                          <Link to={`/categories/${category.name}`}>{category.name}</Link>
+                        } />
+                      )
+                    })}
+                  </DropDownMenu>
+                </ToolbarGroup>
+              </Toolbar>
+
             </div>
           )}
         />
@@ -67,28 +107,30 @@ class App extends Component {
           )}
         />
 
-        {this.props.categories.map(category => (
-          <Route exact path={`/${category.name}`}
-            key={category.name}
-            render={() => (
-              <div>
-                <div>POSTS BY CATEGORY</div>
-                {this.props.posts.filter(post => (post.category === category.name)).map(post => (
-                  <Post
-                    key={post.id}
-                    title={post.title}
-                    timestamp={post.timestamp}
-                    body={post.body}
-                    author={post.author}
-                    category={post.category}
-                    commentCount={post.commentCount}
-                    voteScore={post.voteScore}
-                  />
-                ))}
-              </div>
-            )}
-          />
-        ))}
+        <Route path='/categories/:category'
+
+          render={({match}) => (
+            // <div>{JSON.stringify(match.params.category)}</div>
+            <div>
+              <div>POSTS BY CATEGORY</div>
+              {this.props.posts.filter(post => (post.category === match.params.category)).map(post => (
+                <Post
+                  key={post.id}
+                  title={post.title}
+                  timestamp={post.timestamp}
+                  body={post.body}
+                  author={post.author}
+                  category={post.category}
+                  commentCount={post.commentCount}
+                  voteScore={post.voteScore}
+                />
+              ))}
+            </div>
+          )}
+        />
+
+
+
       </div>
     )
   }
