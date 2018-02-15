@@ -1,52 +1,55 @@
 import React, { Component } from 'react'
-import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import Avatar from 'material-ui/Avatar'
 import { dateToString } from './helpers'
 
 class Post extends Component{
+
   render (){
 
     return (
-      <Card>
+      <Card style={{fontSize: 14}}>
         <CardHeader
           title={this.props.author}
-          subtitle={dateToString(this.props.timestamp).slice(0, 15)}
           titleColor={'pink'}
-          subtitleColor={'pink'}
+          subtitle={
+            <div>
+              <div style={{color: 'pink'}}>
+                {dateToString(this.props.timestamp).slice(0, 15)}
+              </div>
+              <div>
+                {`posted in ${this.props.category} category`}
+              </div>
+            </div>
+          }
+          children={
+            <div>
+              <div>
+                <h3>{this.props.title}</h3>
+              </div>
+              <p>{this.props.body}</p>
+            </div>
+
+          }
           avatar={
-            <Avatar backgroundColor={'pink'}>
+            <Avatar backgroundColor={'pink'} color='black'>
               <div>
                 <div style={{fontSize: 8}}>
                   Score
                 </div>
-                <div style={{fontSize: 14}}>
+                <div>
                   {this.props.voteScore}
                 </div>
               </div>
             </Avatar>}
         />
-        <CardTitle
-          title={this.props.title}
-          subtitle={`posted in ${this.props.category} category`}
-          titleStyle={{fontSize: 18}}
-          titleColor={'grey'}
-        />
-        <CardText
-          color={'grey'}
-        >
-          {this.props.body}
-        </CardText>
-        <CardActions >
-          <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="Edit" />
-          <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="Remove" />
-          <FlatButton style={{backgroundColor: 'pink', color: 'white'}} label="New Comment" />
-        </CardActions>
-        <CardText
-          color={'grey'}
-        >
-          {this.props.commentCount} comments
-        </CardText>
+        <div>
+          <FlatButton style={{backgroundColor: 'pink', color: 'black'}} label="Edit" />
+          <FlatButton style={{backgroundColor: 'pink', color: 'black'}} label="Remove" />
+          <FlatButton style={{backgroundColor: 'pink', color: 'black'}} label="New Comment" />
+        </div>
+        <CardText>{this.props.commentCount} comments</CardText>
       </Card>
     )
   }
