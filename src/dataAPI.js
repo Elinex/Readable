@@ -22,10 +22,10 @@ export const postPost = (post) =>
     body: JSON.stringify(post)
   }).then(res => res.json())
 
-export const getPosts = () =>
+export const getPosts = (id) =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-export const getComments = (id) =>
-  fetch(`${api}/posts/:id/comments`, { headers })
-    .then(res => res.json())
+export const getComments = (parentId) =>
+  fetch(`${api}/posts/${parentId}/comments`, { headers })
+  .then(res => res.json())
