@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import AddPost from './AddPost'
 import * as dataAPI from './dataAPI'
-import { addCategories, addPost } from './actions'
+import { addCategories, addPost, addComments } from './actions'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import Post from './Post'
@@ -14,23 +14,34 @@ import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 class App extends Component {
   state = {
     valueSortPosts: 1,
-    valueCategory: 'none',
-    // postsIds: ['8xf0y6ziyjabvozdd253nd', '6ni6ok3ym7mf1p33lnez']
+    valueCategory: 'none'
   }
 
   componentWillMount (){
-    this.props.getAllPosts().then(() => {
+    dataAPI.getPosts().then(res => {
+      this.props.dispatch(addPost(res))
+    })
+    .then(() => {
       this.props.posts.map(post => {
         return (
-          dataAPI.getComments(post.id).then(res => {
-            console.log(res);
+          dataAPI.getComments(post.id).then(commentsList => {
+            if (commentsList.length > 0) {
+              commentsList.map(comment => {
+                return this.props.comments.push(comment)
+              })
+            }
           })
         )
       })
     })
+    .then(() => {
+      this.props.dispatch(addComments(this.props.comments))
+    })
 
-    this.props.getAllCategories()
-    // this.props.getComments()
+    dataAPI.getCategories().then(res => {
+      this.props.dispatch(addCategories(res.categories))
+    })
+
   }
 
   componentDidMount(){
@@ -52,9 +63,8 @@ class App extends Component {
 
   render() {
 
-
     console.log(this.props);
-    // this.props.getAllPosts()
+
     return (
 
       <div className="App">
@@ -140,7 +150,7 @@ class App extends Component {
 
         <Route path='/posts/:id'
           render={({match}) => (
-            // <div>{match.params.id}</div>
+
             <div>
               <div>POST VISUALIZATION</div>
               {this.props.posts.filter(post => (post.id === match.params.id)).map(post => (
@@ -165,44 +175,8 @@ class App extends Component {
 
 function mapStateToProps(state){
   return {
-    ...state,
-    // comments: state.comments.reduce((acc, cur) => {
-    //   return acc.concat(cur.id)
-    // }, [])
+    ...state
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps){
-  return ({
-    // getComments: (ownProps) => {
-    //   return (
-    //     dataAPI.getComments(ownProps).then(res => {
-    //       console.log(res);
-    //       dispatch(addComments(res))
-    //     })
-    //   )
-    // },
-
-    getAllPosts: () => {
-      return (
-        dataAPI.getPosts().then(res => {
-          dispatch(addPost(res))
-        })
-      )
-    },
-
-    getAllCategories: () => {
-      return (
-        dataAPI.getCategories().then(res => {
-          dispatch(addCategories(res.categories))
-        })
-      )
-    }
-
-  })
-}
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps)(App)
