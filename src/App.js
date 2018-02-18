@@ -26,21 +26,15 @@ export class App extends Component {
       this.props.posts.map(post => {
         return (
           dataAPI.getCommentsAPI(post.id).then(commentsList => {
-            // const commentsById = []
             if (commentsList.length > 0) {
               commentsList.map(comment => {
-                // commentsById.push(comment)
                 return this.props.dispatch(addCommentsAction(comment))
               })
             }
-
           })
         )
       })
     })
-    // .then(() => {
-    //   this.props.dispatch(addCommentsAction(commentsById))
-    // })
 
     dataAPI.getCategoriesAPI().then(categoriesList => {
       this.props.dispatch(addCategoriesAction(categoriesList.categories))
@@ -101,15 +95,7 @@ export class App extends Component {
                   return (
                     <Post
                       key={post.id}
-                      id={post.id}
-                      title={post.title}
-                      timestamp={post.timestamp}
-                      body={post.body}
-                      author={post.author}
-                      category={post.category}
-                      commentCount={post.commentCount}
-                      voteScore={post.voteScore}
-                      // comments={}
+                      post={post}
                     />
                   )
                 })}
@@ -133,14 +119,7 @@ export class App extends Component {
                 {this.props.posts.filter(post => (post.category === match.params.category)).map(post => (
                   <Post
                     key={post.id}
-                    id={post.id}
-                    title={post.title}
-                    timestamp={post.timestamp}
-                    body={post.body}
-                    author={post.author}
-                    category={post.category}
-                    commentCount={post.commentCount}
-                    voteScore={post.voteScore}
+                    post={post}
                   />
                 ))}
               </div>
@@ -155,13 +134,7 @@ export class App extends Component {
                 {this.props.posts.filter(post => (post.id === match.params.id)).map(post => (
                   <Post
                     key={post.id}
-                    title={post.title}
-                    timestamp={post.timestamp}
-                    body={post.body}
-                    author={post.author}
-                    category={post.category}
-                    commentCount={post.commentCount}
-                    voteScore={post.voteScore}
+                    post={post}
                   />
                 ))}
               </div>

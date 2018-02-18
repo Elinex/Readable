@@ -13,16 +13,16 @@ class Post extends Component{
     return (
       <Card style={{fontSize: 14}}>
         <CardHeader
-          title={this.props.author.toUpperCase()}
+          title={this.props.post.author.toUpperCase()}
           titleColor='pink'
           titleStyle={{fontWeight: 'bold'}}
           subtitle={
             <div>
               <div>
-                {`Posted in ${this.props.category} category`}
+                {`Posted in ${this.props.post.category} category`}
               </div>
               <div >
-                {dateToString(this.props.timestamp).slice(0, 15)}
+                {dateToString(this.props.post.timestamp).slice(0, 15)}
               </div>
 
             </div>
@@ -30,22 +30,22 @@ class Post extends Component{
           children={
             <div>
               <div>
-                <h3>{this.props.title}</h3>
+                <h3>{this.props.post.title}</h3>
               </div>
-              <p style={{backgroundColor: 'rgb(232, 232, 232)', 'padding': '15px 5px', whiteSpace: 'normal'}}>
-                {this.props.body}
+              <p style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
+                {this.props.post.body}
               </p>
             </div>
 
           }
           avatar={
-            <Avatar backgroundColor={'pink'} color='black'>
+            <Avatar backgroundColor={'#FFE4E1'} color='black'>
               <div>
                 <div style={{fontSize: 8}}>
                   Score
                 </div>
                 <div>
-                  {this.props.voteScore}
+                  {this.props.post.voteScore}
                 </div>
               </div>
             </Avatar>}
@@ -56,18 +56,26 @@ class Post extends Component{
           <FlatButton style={{backgroundColor: 'white', color: 'black'}} label="New Comment" labelStyle={{textTransform: 'capitalize', color: 'pink'}}/>
         </div>
           <CardHeader
-            subtitle={`${this.props.commentCount} comments`}
+            // subtitle={`${this.props.post.commentCount} comments`}
+            subtitle='See comments'
             actAsExpander={true}
             showExpandableButton={true}
           />
           <CardText expandable={true}>
             {(this.props.comments.length > 0) && (
-              this.props.comments.filter(comment => (comment.parentId === this.props.id))
+              this.props.comments.filter(comment => (comment.parentId === this.props.post.id))
               .map(comment => {
                 return (
                   <Comment key={comment.id} comment={comment} />
                 )
               })
+            )}
+            {(this.props.comments.length > 0) && (
+              <div>
+                <div>No comments.</div>
+                <div>Make one!</div>
+              </div>
+
             )}
           </CardText>
       </Card>
