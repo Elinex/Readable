@@ -3,6 +3,7 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import Avatar from 'material-ui/Avatar'
 import { dateToString } from './helpers'
+import Comment from './Comment'
 import { connect } from 'react-redux'
 
 class Post extends Component{
@@ -60,16 +61,14 @@ class Post extends Component{
             showExpandableButton={true}
           />
           <CardText expandable={true}>
-            {this.props.comments.map(comment => {
-              return (
-                <div key={comment.id}>
-                  {comment.author}<br/>
-                  {comment.body}<br/>
-                  {comment.timestamp}<br/>
-                  {comment.voteScore}<br/>
-                </div>
-              )
-            })}
+            {(this.props.comments.length > 0) && (
+              this.props.comments.filter(comment => (comment.parentId === this.props.id))
+              .map(comment => {
+                return (
+                  <Comment key={comment.id} comment={comment} />
+                )
+              })
+            )}
           </CardText>
       </Card>
     )
@@ -78,7 +77,7 @@ class Post extends Component{
 
 function mapStateToProps(state){
   return {
-    ...state
+    comments: state.comments
   }
 }
 

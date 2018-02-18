@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import AddPost from './AddPost'
 import * as dataAPI from './dataAPI'
-import { addCategories, addPost, addComments } from './actions'
+import { addCategoriesAction, getPostsAction, addCommentsAction } from './actions'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import Post from './Post'
@@ -12,41 +12,40 @@ import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 import { BrowserRouter } from 'react-router-dom'
 
-class App extends Component {
+export class App extends Component {
   state = {
     valueSortPosts: 1,
     valueCategory: 'none'
   }
 
-  componentWillMount (){
-    dataAPI.getPosts().then(res => {
-      this.props.dispatch(addPost(res))
+  componentWillMount(){
+    dataAPI.getPostsAPI().then(postsList => {
+      this.props.dispatch(getPostsAction(postsList))
     })
     .then(() => {
       this.props.posts.map(post => {
         return (
-          dataAPI.getComments(post.id).then(commentsList => {
+          dataAPI.getCommentsAPI(post.id).then(commentsList => {
+            // const commentsById = []
             if (commentsList.length > 0) {
               commentsList.map(comment => {
-                return this.props.comments.push(comment)
+                // commentsById.push(comment)
+                return this.props.dispatch(addCommentsAction(comment))
               })
             }
+
           })
         )
       })
     })
-    .then(() => {
-      this.props.dispatch(addComments(this.props.comments))
+    // .then(() => {
+    //   this.props.dispatch(addCommentsAction(commentsById))
+    // })
+
+    dataAPI.getCategoriesAPI().then(categoriesList => {
+      this.props.dispatch(addCategoriesAction(categoriesList.categories))
     })
-
-    dataAPI.getCategories().then(res => {
-      this.props.dispatch(addCategories(res.categories))
-    })
-
-  }
-
-  componentDidMount(){
-    this.props.posts.sort(sortBy('-voteScore'))
+    // this.props.posts.sort(sortBy('-voteScore'))
   }
 
   sortPosts = (option, value) => {
@@ -63,8 +62,6 @@ class App extends Component {
   }
 
   render() {
-
-    console.log(this.props);
 
     return (
       <BrowserRouter>
@@ -112,6 +109,7 @@ class App extends Component {
                       category={post.category}
                       commentCount={post.commentCount}
                       voteScore={post.voteScore}
+                      // comments={}
                     />
                   )
                 })}

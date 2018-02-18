@@ -11,21 +11,21 @@ const headersPost = {
   'Content-Type': 'application/json'
 }
 
-export const getCategories = () =>
+export const getCategoriesAPI = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
 
-export const postPost = (post) =>
+export const postPostAPI = (post) =>
   fetch(`${api}/posts`, {
     method: 'POST',
     headers: headersPost,
     body: JSON.stringify(post)
   }).then(res => res.json())
 
-export const getPosts = (id) =>
+export const getPostsAPI = () =>
   fetch(`${api}/posts`, { headers })
     .then(res => res.json())
 
-export const getComments = (parentId) =>
+export const getCommentsAPI = (parentId) =>
   fetch(`${api}/posts/${parentId}/comments`, { headers })
   .then(res => res.json())

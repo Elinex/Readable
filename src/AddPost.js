@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import * as dataAPI from './dataAPI'
 import { guid } from './helpers'
-import { addPost } from './actions'
+import { addPostAction, getPostsAction } from './actions'
 import { Link } from 'react-router-dom'
 
 class AddPost extends Component{
@@ -41,8 +41,10 @@ class AddPost extends Component{
       author: this.state.author,
       category: this.state.value,
     }
-    dataAPI.postPost(newPost).then(res => {
-      this.props.dispatch(addPost(res))
+    dataAPI.postPostAPI(newPost).then(res => {
+      console.log(res);
+      console.log(this.props);
+      this.props.dispatch(addPostAction(res))
     })
   }
 
@@ -53,6 +55,12 @@ class AddPost extends Component{
       this.createPost()
       alert("Post created with success!")
     }
+  }
+
+  componentWillUnmount(){
+    dataAPI.getPostsAPI().then(postsList => {
+      this.props.dispatch(getPostsAction(postsList))
+    })
   }
 
   render(){
@@ -108,7 +116,7 @@ function mapStateToProps(state){
     categories: state.categories.reduce((acc, cur) => {
       return acc.concat(cur.name)
     }, []),
-    posts: state.posts
+    // posts: state.posts
   }
 }
 
