@@ -5,6 +5,7 @@ import Avatar from 'material-ui/Avatar'
 import { dateToString } from './helpers'
 import Comment from './Comment'
 import { connect } from 'react-redux'
+import UpAndDownVote from './UpAndDownVote'
 
 class Post extends Component{
 
@@ -32,9 +33,12 @@ class Post extends Component{
               <div>
                 <h3>{this.props.post.title}</h3>
               </div>
-              <p style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
-                {this.props.post.body}
-              </p>
+              <div style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
+                <p>
+                  {this.props.post.body}
+                </p>
+                <UpAndDownVote />
+              </div>
             </div>
 
           }
@@ -70,7 +74,7 @@ class Post extends Component{
                 )
               })
             )}
-            {(this.props.comments.length > 0) && (
+            {(this.props.comments.filter(comment => (comment.parentId === this.props.post.id)).length === 0) && (
               <div>
                 <div>No comments.</div>
                 <div>Make one!</div>
