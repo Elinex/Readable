@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import UpAndDownVote from './UpAndDownVote'
 
 class Post extends Component{
-
   render (){
 
     return (
@@ -43,7 +42,7 @@ class Post extends Component{
 
           }
           avatar={
-            <Avatar backgroundColor={'#FFE4E1'} color='black'>
+            <Avatar backgroundColor={'rgb(232, 232, 232)'} color='black'>
               <div>
                 <div style={{fontSize: 8}}>
                   Score
@@ -59,29 +58,28 @@ class Post extends Component{
           <FlatButton style={{backgroundColor: 'white', color: 'black'}} label="Remove" labelStyle={{textTransform: 'capitalize', color: 'pink'}}/>
           <FlatButton style={{backgroundColor: 'white', color: 'black'}} label="New Comment" labelStyle={{textTransform: 'capitalize', color: 'pink'}}/>
         </div>
-          <CardHeader
-            // subtitle={`${this.props.post.commentCount} comments`}
-            subtitle='See comments'
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
-          <CardText expandable={true}>
-            {(this.props.comments.length > 0) && (
-              this.props.comments.filter(comment => (comment.parentId === this.props.post.id))
-              .map(comment => {
-                return (
-                  <Comment key={comment.id} comment={comment} />
-                )
-              })
-            )}
-            {(this.props.comments.filter(comment => (comment.parentId === this.props.post.id)).length === 0) && (
-              <div>
-                <div>No comments.</div>
-                <div>Make one!</div>
-              </div>
+        <CardHeader
+          subtitle='See comments'
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
+        <CardText expandable={true}>
+          {(this.props.comments.length > 0) && (
+            this.props.comments.filter(comment => (comment.parentId === this.props.post.id))
+            .map(comment => {
+              return (
+                <Comment key={comment.id} comment={comment} />
+              )
+            })
+          )}
+          {(this.props.comments.filter(comment => (comment.parentId === this.props.post.id)).length === 0) && (
+            <div>
+              <div>No comments.</div>
+              <div>Make one!</div>
+            </div>
 
-            )}
-          </CardText>
+          )}
+        </CardText>
       </Card>
     )
   }
