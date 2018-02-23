@@ -9,29 +9,9 @@ class Comment extends Component{
   render (){
 
     return (
-      // <Card style={{backgroundColor: 'rgb(232, 232, 232)'}}>
-      //   <CardText>
-      //     <div>
-      //       <div>
-      //         <b>{this.props.comment.author} </b>
-      //          commented in
-      //         <b> {dateToString(this.props.comment.timestamp).slice(0, 15)}</b>
-      //       </div>
-      //       <div>Score votes: <b>{this.props.comment.voteScore}</b></div>
-      //       <div>
-      //         <div>{this.props.comment.body}</div>
-      //         <UpAndDownVote />
-      //       </div>
-      //     </div>
-      //   </CardText>
-      // </Card>
 
-      /************************/
       <Card style={{backgroundColor: 'rgb(232, 232, 232)'}}>
         <CardHeader
-          // title={this.props.post.author.toUpperCase()}
-          // titleColor='pink'
-          // titleStyle={{fontWeight: 'bold'}}
           subtitle={
             <div>
               <div>
@@ -55,10 +35,10 @@ class Comment extends Component{
                   {this.props.comment.voteScore}
                 </div>
               </div>
-            </Avatar>}
+            </Avatar>
+          }
         />
-</Card>
-
+      </Card>
     )
   }
 }

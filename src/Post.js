@@ -6,6 +6,12 @@ import { dateToString } from './helpers'
 import Comment from './Comment'
 import { connect } from 'react-redux'
 import UpAndDownVote from './UpAndDownVote'
+import { Link } from 'react-router-dom'
+
+const labelStyle = {
+  textTransform: 'capitalize',
+  color: 'pink'
+}
 
 class Post extends Component{
   render (){
@@ -54,9 +60,9 @@ class Post extends Component{
             </Avatar>}
         />
         <div>
-          <FlatButton style={{backgroundColor: 'white', color: 'black'}} label="Edit" labelStyle={{textTransform: 'capitalize', color: 'pink'}} />
-          <FlatButton style={{backgroundColor: 'white', color: 'black'}} label="Remove" labelStyle={{textTransform: 'capitalize', color: 'pink'}}/>
-          <FlatButton style={{backgroundColor: 'white', color: 'black'}} label="New Comment" labelStyle={{textTransform: 'capitalize', color: 'pink'}}/>
+          <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />}/>
+          <FlatButton label="Remove" labelStyle={labelStyle} />
+          <FlatButton label="New Comment" labelStyle={labelStyle} />
         </div>
         <CardHeader
           subtitle='See comments'
