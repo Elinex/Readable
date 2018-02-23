@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import AddPost from './AddPost'
+import EditPost from './EditPost'
 import * as dataAPI from './dataAPI'
 import { addCategoriesAction, getPostsAction, addCommentsAction } from './actions'
 import { connect } from 'react-redux'
@@ -108,6 +109,15 @@ export class App extends Component {
           <Route exact path='/addPost'
             render={() => (
               <AddPost />
+            )}
+          />
+
+          <Route exact path='/editPost/:id'
+            render={({match}) => (
+              // <div>{JSON.stringify(match.params.id)}</div>
+              <EditPost
+                postID={match.params.id}
+              />
             )}
           />
 
