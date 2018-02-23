@@ -65,11 +65,10 @@ class EditPost extends Component{
 
   render(){
     const {value} = this.state
-    console.log(this.props);
 
     return (
       <div>
-        <h2>New post</h2>
+        <h2>Edit post</h2>
         <div>
           <TextField
             floatingLabelText="Title"

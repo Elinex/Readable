@@ -5,19 +5,13 @@ import EditPost from './EditPost'
 import * as dataAPI from './dataAPI'
 import { addCategoriesAction, getPostsAction, addCommentsAction } from './actions'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Post from './Post'
 import sortBy from 'sort-by'
-import DropDownMenu from 'material-ui/DropDownMenu'
-import MenuItem from 'material-ui/MenuItem'
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 import { BrowserRouter } from 'react-router-dom'
+import MainView from './MainView'
 
 export class App extends Component {
-  state = {
-    valueSortPosts: 1,
-    valueCategory: 'none'
-  }
 
   componentWillMount(){
     dataAPI.getPostsAPI().then(postsList => {
@@ -36,11 +30,14 @@ export class App extends Component {
         )
       })
     })
+    .then(() => {
+      return this.props.posts.sort(sortBy('-voteScore'))
+    })
 
     dataAPI.getCategoriesAPI().then(categoriesList => {
       this.props.dispatch(addCategoriesAction(categoriesList.categories))
     })
-    // this.props.posts.sort(sortBy('-voteScore'))
+
   }
 
   sortPosts = (option, value) => {
@@ -67,42 +64,7 @@ export class App extends Component {
 
           <Route exact path='/'
             render={() => (
-              <div>
-                <Toolbar>
-                  <ToolbarGroup>
-                    <DropDownMenu value={this.state.valueSortPosts} style={{fontWeight: 'bold' }}>
-                      <MenuItem value={1} primaryText="Sort posts by" disabled={true}/>
-                      <MenuItem value={2} primaryText="Recently posted" onClick={() => this.sortPosts('-timestamp', 2)}/>
-                      <MenuItem value={3} primaryText="Most commented" onClick={() => this.sortPosts('-commentCount', 3)}/>
-                      <MenuItem value={4} primaryText="Highest score" onClick={() => this.sortPosts('-voteScore', 4)}/>
-                    </DropDownMenu>
-                  </ToolbarGroup>
-
-                  <ToolbarGroup firstChild={true}>
-                    <DropDownMenu value={this.state.valueCategory} style={{fontWeight: 'bold' }}>
-                      <MenuItem value={'none'} primaryText="Posts by category" />
-                      {this.props.categories.map(category => {
-                        return (
-                          <MenuItem key={category.name} children={
-                            <Link to={`/${category.name}/posts`}>{category.name}</Link>
-                          } />
-                        )
-                      })}
-                    </DropDownMenu>
-                  </ToolbarGroup>
-                </Toolbar>
-
-                {this.props.posts.map(post => {
-                  return (
-                    <Post
-                      key={post.id}
-                      post={post}
-                    />
-                  )
-                })}
-                <Link to='/addPost' className="btn btn-secondary btn-sm">NEW POST</Link>
-
-              </div>
+              <MainView />
             )}
           />
 
@@ -138,7 +100,6 @@ export class App extends Component {
 
           <Route path='/posts/:id'
             render={({match}) => (
-
               <div>
                 <div>POST VISUALIZATION</div>
                 {this.props.posts.filter(post => (post.id === match.params.id)).map(post => (
@@ -152,8 +113,6 @@ export class App extends Component {
           />
         </div>
       </BrowserRouter>
-
-
     )
   }
 }
