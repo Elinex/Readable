@@ -4,7 +4,6 @@ import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import * as dataAPI from './dataAPI'
 import { guid } from './helpers'
 import { addPostAction, getPostsAction } from './actions'
@@ -15,7 +14,7 @@ class EditPost extends Component{
     value: [],
     title: '',
     author: '',
-    textBody: ''
+    body: ''
   }
 
   handleChange = (event, index, value) => this.setState({value})
@@ -30,6 +29,15 @@ class EditPost extends Component{
         primaryText={category}
       />
     ))
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      value: nextProps.post.category,
+      title: nextProps.post.title,
+      author: nextProps.post.author,
+      body: nextProps.post.body
+    })
   }
 
   createPost = () => {
@@ -64,7 +72,6 @@ class EditPost extends Component{
   }
 
   render(){
-    const {value} = this.state
 
     return (
       <div>
@@ -72,22 +79,25 @@ class EditPost extends Component{
         <div>
           <TextField
             floatingLabelText="Title"
+            value={this.state.title}
             type="text"
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
             floatingLabelText="Author"
+            value={this.state.author}
             type="text"
             onChange={(event) => this.setState({author: event.target.value})}
           /><br />
           <SelectField
             hintText="Post category"
-            value={value}
+            value={this.state.value}
             onChange={this.handleChange}
-          >{this.menuItems(value)}</SelectField><br />
+          >{this.menuItems(this.state.value)}</SelectField><br />
           <TextField
             multiLine={true}
             floatingLabelText="Text"
+            value={this.state.body}
             type="text"
             onChange={(event) => this.setState({textBody: event.target.value})}
           /><br />
@@ -105,13 +115,11 @@ class EditPost extends Component{
   }
 }
 
-EditPost.propTypes = {
-  categories: PropTypes.array.isRequired,
-}
-
 function mapStateToProps(state, ownProps){
   return {
-    post: state.posts.filter(post => post.id === ownProps.postID),
+    post: state.posts.filter(post => post.id === ownProps.postID).reduce((acc, cur) => {
+      return cur
+    }, null),
     categories: state.categories.reduce((acc, cur) => {
       return acc.concat(cur.name)
     }, []),

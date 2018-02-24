@@ -37,7 +37,6 @@ export class App extends Component {
     dataAPI.getCategoriesAPI().then(categoriesList => {
       this.props.dispatch(addCategoriesAction(categoriesList.categories))
     })
-
   }
 
   sortPosts = (option, value) => {
