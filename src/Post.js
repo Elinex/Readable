@@ -7,6 +7,7 @@ import Comment from './Comment'
 import { connect } from 'react-redux'
 import UpAndDownVote from './UpAndDownVote'
 import { Link } from 'react-router-dom'
+import { getPostsAction } from './actions'
 
 const labelStyle = {
   textTransform: 'capitalize',
@@ -14,6 +15,14 @@ const labelStyle = {
 }
 
 class Post extends Component{
+
+  removePost = () => {
+    if (window.confirm('Are you sure to remove this post?')){
+      const postsAlreadyExist = this.props.posts.filter(post => post.id !== this.props.post.id)
+      return this.props.dispatch(getPostsAction(postsAlreadyExist))
+    }
+  }
+
   render (){
 
     return (
@@ -61,7 +70,7 @@ class Post extends Component{
         />
         <div>
           <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />}/>
-          <FlatButton label="Remove" labelStyle={labelStyle} />
+          <FlatButton label="Remove" labelStyle={labelStyle} onClick={this.removePost}/>
           <FlatButton label="New Comment" labelStyle={labelStyle} />
         </div>
         <CardHeader
@@ -93,7 +102,8 @@ class Post extends Component{
 
 function mapStateToProps(state){
   return {
-    comments: state.comments
+    comments: state.comments,
+    posts: state.posts
   }
 }
 
