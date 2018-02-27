@@ -5,7 +5,7 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
 import * as dataAPI from './dataAPI'
-import { addPostAction } from './actions'
+import { addPostAction, getPostsAction } from './actions'
 import { guid } from './helpers'
 import { Link } from 'react-router-dom'
 
@@ -45,15 +45,18 @@ class EditPost extends Component{
       id: guid(),
       timestamp: Date.now(),
       title: this.state.title,
-      body: this.state.textBody,
+      body: this.state.body,
       author: this.state.author,
       category: this.state.value,
     }
-    dataAPI.postPostAPI(newPost).then(
-      res => {
-        return this.props.dispatch(addPostAction(res))
-      }
-    )
+    dataAPI.postPostAPI(newPost).then(res => {
+      return this.props.dispatch(addPostAction(res))
+    })
+  }
+
+  componentWillUnmount(){
+    const postsAlreadyExist = this.props.posts.filter(post => post.id !== this.props.postID)
+    return this.props.dispatch(getPostsAction(postsAlreadyExist))
   }
 
   handleClick = () => {
@@ -62,6 +65,7 @@ class EditPost extends Component{
   }
 
   render(){
+    console.log(this.props);
 
     return (
       <div>
