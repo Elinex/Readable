@@ -15,7 +15,7 @@ const posts = (state = [], action) => {
     case GET_POSTS:
       return action.postsList
     case ADD_POST:
-      return action.post
+      return state.concat(action.post)
     default:
       return state
   }

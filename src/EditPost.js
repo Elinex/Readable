@@ -5,8 +5,8 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
 import * as dataAPI from './dataAPI'
+import { addPostAction } from './actions'
 import { guid } from './helpers'
-import { addPostAction, getPostsAction } from './actions'
 import { Link } from 'react-router-dom'
 
 class EditPost extends Component{
@@ -31,16 +31,16 @@ class EditPost extends Component{
     ))
   }
 
-  componentWillReceiveProps(nextProps){
+  componentDidMount(){
     this.setState({
-      value: nextProps.post.category,
-      title: nextProps.post.title,
-      author: nextProps.post.author,
-      body: nextProps.post.body
+      value: this.props.postToEdit.category,
+      title: this.props.postToEdit.title,
+      author: this.props.postToEdit.author,
+      body: this.props.postToEdit.body
     })
   }
 
-  createPost = () => {
+  editPost = () => {
     const newPost = {
       id: guid(),
       timestamp: Date.now(),
@@ -49,26 +49,16 @@ class EditPost extends Component{
       author: this.state.author,
       category: this.state.value,
     }
-    dataAPI.postPostAPI(newPost).then(res => {
-      console.log(res);
-      console.log(this.props);
-      this.props.dispatch(addPostAction(res))
-    })
+    dataAPI.postPostAPI(newPost).then(
+      res => {
+        return this.props.dispatch(addPostAction(res))
+      }
+    )
   }
 
   handleClick = () => {
-    if ((this.state.value.length === 0) || !this.state.title || !this.state.author || !this.state.textBody){
-      alert("Fill in all form fields")
-    } else {
-      this.createPost()
-      alert("Post created with success!")
-    }
-  }
-
-  componentWillUnmount(){
-    dataAPI.getPostsAPI().then(postsList => {
-      this.props.dispatch(getPostsAction(postsList))
-    })
+    this.editPost()
+    alert("Post edited with success!")
   }
 
   render(){
@@ -99,7 +89,7 @@ class EditPost extends Component{
             floatingLabelText="Text"
             value={this.state.body}
             type="text"
-            onChange={(event) => this.setState({textBody: event.target.value})}
+            onChange={(event) => this.setState({body: event.target.value})}
           /><br />
         </div>
         <div>
@@ -117,12 +107,13 @@ class EditPost extends Component{
 
 function mapStateToProps(state, ownProps){
   return {
-    post: state.posts.filter(post => post.id === ownProps.postID).reduce((acc, cur) => {
+    postToEdit: state.posts.filter(post => post.id === ownProps.postID).reduce((acc, cur) => {
       return cur
     }, null),
     categories: state.categories.reduce((acc, cur) => {
       return acc.concat(cur.name)
     }, []),
+    posts: state.posts
   }
 }
 
