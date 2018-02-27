@@ -7,7 +7,9 @@ import Comment from './Comment'
 import { connect } from 'react-redux'
 import UpAndDownVote from './UpAndDownVote'
 import { Link } from 'react-router-dom'
-import { getPostsAction } from './actions'
+import { removePostAction } from './actions'
+import * as dataAPI from './dataAPI'
+import NewComment from './NewComment'
 
 const labelStyle = {
   textTransform: 'capitalize',
@@ -18,8 +20,10 @@ class Post extends Component{
 
   removePost = () => {
     if (window.confirm('Are you sure to remove this post?')){
-      const postsAlreadyExist = this.props.posts.filter(post => post.id !== this.props.post.id)
-      return this.props.dispatch(getPostsAction(postsAlreadyExist))
+      return dataAPI.removePostAPI(this.props.post.id).then(res => {
+        console.log(res);
+        return this.props.dispatch(removePostAction(res))
+      })
     }
   }
 
@@ -71,7 +75,7 @@ class Post extends Component{
         <div>
           <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />}/>
           <FlatButton label="Remove" labelStyle={labelStyle} onClick={this.removePost}/>
-          <FlatButton label="New Comment" labelStyle={labelStyle} />
+          <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment />}/>
         </div>
         <CardHeader
           subtitle='See comments'

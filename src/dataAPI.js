@@ -29,3 +29,10 @@ export const getPostsAPI = () =>
 export const getCommentsAPI = (parentId) =>
   fetch(`${api}/posts/${parentId}/comments`, { headers })
   .then(res => res.json())
+
+export const removePostAPI = (postID) =>
+  fetch(`${api}/posts/${postID}`, {
+    method: 'DELETE',
+    headers: headers,
+    body: JSON.stringify(postID)
+  }).then(res => res.json())
