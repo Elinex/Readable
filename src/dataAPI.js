@@ -45,15 +45,13 @@ export const editPostAPI = (id, post) =>
     body: JSON.stringify(post)
   }).then(res => res.json())
 
-  // app.put('/posts/:id', bodyParser.json(), (req, res) => {
-  //     posts.edit(req.token, req.params.id, req.body)
-  //       .then(
-  //         (data) => res.send(data),
-  //           (error) => {
-  //               console.error(error)
-  //               res.status(500).send({
-  //                   error: 'There was an error.'
-  //               })
-  //           }
-  //       )
-  // })
+// | `POST /comments` | Add a comment to a post. | **id** - Any unique ID.
+// As with posts, UUID is probably the best here. <br>
+// **timestamp** - [Timestamp] Get this however you want. <br> **body** - [String] <br>
+// **author** - [String] <br> **parentId** - Should match a post id in the database. |
+export const addCommentAPI = (comment) =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: headersPost,
+    body: JSON.stringify(comment)
+  }).then(res => res.json())

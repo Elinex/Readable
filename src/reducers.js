@@ -1,4 +1,12 @@
-import { ADD_CATEGORIES, GET_POSTS, ADD_POST, ADD_COMMENTS, REMOVE_POST, EDIT_POST } from './actions'
+import {
+  ADD_CATEGORIES,
+  GET_POSTS,
+  ADD_POST,
+  ADD_COMMENTS,
+  REMOVE_POST,
+  EDIT_POST,
+  ADD_COMMENT
+} from './actions'
 import { combineReducers } from 'redux'
 
 const categories = (state = [], action) => {
@@ -36,6 +44,8 @@ const comments = (state = [], action) => {
   switch (action.type) {
     case ADD_COMMENTS:
       return state.concat(action.commentsList)
+    case ADD_COMMENT:
+      return state.concat(action.comment)
     default:
       return state
   }

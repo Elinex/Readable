@@ -65,7 +65,6 @@ class AddPost extends Component{
 
   render(){
     const {value} = this.state
-    console.log(this.props);
 
     return (
       <div>
@@ -115,8 +114,7 @@ function mapStateToProps(state){
     ...state,
     categories: state.categories.reduce((acc, cur) => {
       return acc.concat(cur.name)
-    }, []),
-    // posts: state.posts
+    }, [])
   }
 }
 

@@ -21,7 +21,6 @@ class Post extends Component{
   removePost = () => {
     if (window.confirm('Are you sure to remove this post?')){
       return dataAPI.removePostAPI(this.props.post.id).then(res => {
-        console.log(res);
         return this.props.dispatch(removePostAction(res))
       })
     }
@@ -75,7 +74,7 @@ class Post extends Component{
         <div>
           <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />}/>
           <FlatButton label="Remove" labelStyle={labelStyle} onClick={this.removePost}/>
-          <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment />}/>
+          <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>}/>
         </div>
         <CardHeader
           subtitle='See comments'
