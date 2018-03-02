@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom'
 import Post from './Post'
 import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
+import { Link } from 'react-router-dom'
 
 export class App extends Component {
 
@@ -52,6 +53,7 @@ export class App extends Component {
                     post={post}
                   />
                 ))}
+                <Link to='/'>Go to MainView</Link>
               </div>
             )}
           />

@@ -7,6 +7,11 @@ import * as dataAPI from './dataAPI'
 import { addCommentAction } from './actions'
 import { connect } from 'react-redux'
 
+const style = {
+  textTransform: 'capitalize',
+  color: 'pink'
+}
+
 class NewComment extends Component {
   state = {
     open: false,
@@ -54,7 +59,7 @@ class NewComment extends Component {
 
     return (
       <div>
-        <FlatButton label="New comment" onClick={this.handleOpen} />
+        <FlatButton  labelStyle={style} label="New comment" onClick={this.handleOpen} />
         <Dialog
           title="Write a new comment"
           actions={actions}

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { removePostAction } from './actions'
 import * as dataAPI from './dataAPI'
 import NewComment from './NewComment'
+import RemovePost from './RemovePost'
 
 const labelStyle = {
   textTransform: 'capitalize',
@@ -71,10 +72,10 @@ class Post extends Component{
               </div>
             </Avatar>}
         />
-        <div>
-          <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />}/>
-          <FlatButton label="Remove" labelStyle={labelStyle} onClick={this.removePost}/>
-          <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>}/>
+        <div style={{display: 'inline-flex'}}>
+          <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />} />
+          <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postID={this.props.post.id}/>} />
+          <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>} />
         </div>
         <CardHeader
           subtitle='See comments'

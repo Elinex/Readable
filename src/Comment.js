@@ -16,7 +16,7 @@ class Comment extends Component{
             <div>
               <div>
                 <b>{this.props.comment.author} </b>
-                 commented in
+                 commented on
                 <b> {dateToString(this.props.comment.timestamp).slice(0, 15)}</b>
               </div>
               <div>
