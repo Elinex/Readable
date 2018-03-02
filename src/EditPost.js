@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
 import * as dataAPI from './dataAPI'
-import { addPostAction, getPostsAction, editPostAction } from './actions'
-import { guid } from './helpers'
+import { editPostAction } from './actions'
 import { Link } from 'react-router-dom'
 
 class EditPost extends Component{
@@ -16,10 +13,8 @@ class EditPost extends Component{
   }
 
   editPost = (id, post) => {
-
     dataAPI.editPostAPI(id, post).then(res => {
       this.props.dispatch(editPostAction(res))
-      // console.log(res);
     })
   }
 

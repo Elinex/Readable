@@ -7,11 +7,40 @@ import sortBy from 'sort-by'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
+import * as dataAPI from './dataAPI'
+import { getCategoriesAction, getPostsAction, getCommentsAction } from './actions'
+
 
 export class MainView extends Component {
   state = {
     valueSortPosts: 'Sort posts by',
     valueCategory: 'none'
+  }
+
+  componentWillMount(){
+    dataAPI.getPostsAPI().then(postsList => {
+      this.props.dispatch(getPostsAction(postsList))
+    })
+    .then(() => {
+      this.props.posts.map(post => {
+        return (
+          dataAPI.getCommentsAPI(post.id).then(commentsList => {
+            if (commentsList.length > 0) {
+              commentsList.map(comment => {
+                return this.props.dispatch(getCommentsAction(comment))
+              })
+            }
+          })
+        )
+      })
+    })
+    .then(() => {
+      return this.props.posts.sort(sortBy('-voteScore'))
+    })
+
+    dataAPI.getCategoriesAPI().then(categoriesList => {
+      this.props.dispatch(getCategoriesAction(categoriesList.categories))
+    })
   }
 
   sortPosts = (option, value) => {

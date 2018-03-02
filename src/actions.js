@@ -1,14 +1,14 @@
-export const ADD_CATEGORIES = 'ADD_CATEGORIES'
+export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const GET_POSTS = 'GET_POSTS'
 export const ADD_POST = 'ADD_POST'
-export const ADD_COMMENTS = 'ADD_COMMENTS'
 export const REMOVE_POST = 'REMOVE_POST'
 export const EDIT_POST = 'EDIT_POST'
+export const GET_COMMENTS = 'GET_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 
-export function addCategoriesAction(categoriesList) {
+export function getCategoriesAction(categoriesList) {
   return {
-    type: ADD_CATEGORIES,
+    type: GET_CATEGORIES,
     categoriesList
   }
 }
@@ -41,9 +41,9 @@ export function editPostAction(post){
   }
 }
 
-export function addCommentsAction(commentsList) {
+export function getCommentsAction(commentsList) {
   return {
-    type: ADD_COMMENTS,
+    type: GET_COMMENTS,
     commentsList
   }
 }
