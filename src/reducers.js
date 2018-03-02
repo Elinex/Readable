@@ -1,4 +1,4 @@
-import { ADD_CATEGORIES, GET_POSTS, ADD_POST, ADD_COMMENTS } from './actions'
+import { ADD_CATEGORIES, GET_POSTS, ADD_POST, ADD_COMMENTS, REMOVE_POST, EDIT_POST } from './actions'
 import { combineReducers } from 'redux'
 
 const categories = (state = [], action) => {
@@ -16,6 +16,17 @@ const posts = (state = [], action) => {
       return action.postsList
     case ADD_POST:
       return state.concat(action.post)
+    case REMOVE_POST:
+      return state.filter(post => action.post.id !== post.id)
+    case EDIT_POST:
+      return state.map(post => {
+        if (post.id === action.post.id) {
+          post.title = action.post.title
+          post.body = action.post.body
+          return post
+        }
+        return post
+      })
     default:
       return state
   }

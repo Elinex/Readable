@@ -5,92 +5,56 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { connect } from 'react-redux'
 import * as dataAPI from './dataAPI'
-import { addPostAction, getPostsAction } from './actions'
+import { addPostAction, getPostsAction, editPostAction } from './actions'
 import { guid } from './helpers'
 import { Link } from 'react-router-dom'
 
 class EditPost extends Component{
   state = {
-    value: [],
-    title: '',
-    author: '',
-    body: ''
+    title: this.props.post.title,
+    body: this.props.post.body
   }
 
-  handleChange = (event, index, value) => this.setState({value})
+  editPost = (id, post) => {
 
-  menuItems(value) {
-    return this.props.categories.map((category) => (
-      <MenuItem
-        key={category}
-        insetChildren={true}
-        checked={value && value.indexOf(category) > -1}
-        value={category}
-        primaryText={category}
-      />
-    ))
-  }
-
-  componentDidMount(){
-    this.setState({
-      value: this.props.postToEdit.category,
-      title: this.props.postToEdit.title,
-      author: this.props.postToEdit.author,
-      body: this.props.postToEdit.body
+    dataAPI.editPostAPI(id, post).then(res => {
+      this.props.dispatch(editPostAction(res))
+      // console.log(res);
     })
-  }
-
-  editPost = () => {
-    const newPost = {
-      id: guid(),
-      timestamp: Date.now(),
-      title: this.state.title,
-      body: this.state.body,
-      author: this.state.author,
-      category: this.state.value,
-    }
-    dataAPI.postPostAPI(newPost).then(res => {
-      return this.props.dispatch(addPostAction(res))
-    })
-  }
-
-  componentWillUnmount(){
-    const postsAlreadyExist = this.props.posts.filter(post => post.id !== this.props.postID)
-    return this.props.dispatch(getPostsAction(postsAlreadyExist))
-  }
-
-  handleClick = () => {
-    this.editPost()
-    alert("Post edited with success!")
   }
 
   render(){
     console.log(this.props);
+    console.log(this.state);
 
     return (
       <div>
         <h2>Edit post</h2>
         <div>
           <TextField
+            id='title'
             floatingLabelText="Title"
             value={this.state.title}
             type="text"
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
+            id='author'
             floatingLabelText="Author"
-            value={this.state.author}
+            value={this.props.post.author}
             type="text"
-            onChange={(event) => this.setState({author: event.target.value})}
+            disabled={true}
           /><br />
-          <SelectField
-            hintText="Post category"
-            value={this.state.value}
-            onChange={this.handleChange}
-          >{this.menuItems(this.state.value)}</SelectField><br />
           <TextField
+            id='category'
+            floatingLabelText="Category"
+            value={this.props.post.category}
+            type="text"
+            disabled={true}
+          /><br />
+          <TextField
+            id='body'
             multiLine={true}
-            floatingLabelText="Text"
             value={this.state.body}
             type="text"
             onChange={(event) => this.setState({body: event.target.value})}
@@ -100,7 +64,7 @@ class EditPost extends Component{
           <FlatButton
             label="Submit"
             primary={true}
-            onClick={this.handleClick}
+            onClick={() => this.editPost(this.props.post.id, this.state)}
           />
         </div>
         <Link to='/'>Go to MainView</Link>
@@ -111,7 +75,7 @@ class EditPost extends Component{
 
 function mapStateToProps(state, ownProps){
   return {
-    postToEdit: state.posts.filter(post => post.id === ownProps.postID).reduce((acc, cur) => {
+    post: state.posts.filter(post => post.id === ownProps.postID).reduce((acc, cur) => {
       return cur
     }, null),
     categories: state.categories.reduce((acc, cur) => {

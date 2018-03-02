@@ -36,3 +36,24 @@ export const removePostAPI = (postID) =>
     headers: headers,
     body: JSON.stringify(postID)
   }).then(res => res.json())
+
+// | `PUT /posts/:id` | Edit the details of an existing post. | **title** - [String] <br> **body** - [String] |
+export const editPostAPI = (id, post) =>
+  fetch(`${api}/posts/${id}`, {
+    method: 'PUT',
+    headers: headersPost,
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+
+  // app.put('/posts/:id', bodyParser.json(), (req, res) => {
+  //     posts.edit(req.token, req.params.id, req.body)
+  //       .then(
+  //         (data) => res.send(data),
+  //           (error) => {
+  //               console.error(error)
+  //               res.status(500).send({
+  //                   error: 'There was an error.'
+  //               })
+  //           }
+  //       )
+  // })
