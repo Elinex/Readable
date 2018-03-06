@@ -77,3 +77,21 @@ export const addCommentAPI = (comment) =>
     headers: headersPost,
     body: JSON.stringify(comment)
   }).then(res => res.json())
+
+// | `POST /posts/:id` | Used for voting on a post. |
+// **option** - [String]: Either `"upVote"` or `"downVote"`. |
+export const votePostAPI = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'POST',
+    headers: headersPost,
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+
+// | `POST /comments/:id` | Used for voting on a comment. |
+// **option** - [String]: Either `"upVote"` or `"downVote"`.  |
+export const voteCommentAPI = (comment) =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'POST',
+    headers: headersPost,
+    body: JSON.stringify(comment)
+  }).then(res => res.json())

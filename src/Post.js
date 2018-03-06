@@ -28,7 +28,7 @@ class Post extends Component{
   }
 
   render (){
-
+    console.log(this.props);
     return (
       <Card style={{fontSize: 14}}>
         <CardHeader
@@ -55,7 +55,7 @@ class Post extends Component{
                 <p>
                   {this.props.post.body}
                 </p>
-                <UpAndDownVote />
+                <UpAndDownVote voteScore={this.props.post.voteScore} post={this.props.post}/>
               </div>
             </div>
 
@@ -78,7 +78,7 @@ class Post extends Component{
           <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>} />
         </div>
         <CardHeader
-          subtitle='See comments'
+          subtitle='Post comments'
           actAsExpander={true}
           showExpandableButton={true}
         />

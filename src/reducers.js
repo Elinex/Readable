@@ -5,7 +5,8 @@ import {
   REMOVE_POST,
   EDIT_POST,
   GET_COMMENTS,
-  ADD_COMMENT
+  ADD_COMMENT,
+  EDIT_VOTE
 } from './actions'
 import { combineReducers } from 'redux'
 
@@ -35,6 +36,14 @@ const posts = (state = [], action) => {
         }
         return post
       })
+    case EDIT_VOTE:
+    return state.map(post => {
+      if ((action.post) && (post) && (post.id === action.post.id)) {
+        post.voteScore = action.post.voteScore
+        return post
+      }
+      return post
+    })
     default:
       return state
   }
@@ -46,6 +55,14 @@ const comments = (state = [], action) => {
       return state.concat(action.commentsList)
     case ADD_COMMENT:
       return state.concat(action.comment)
+    case EDIT_VOTE:
+      return state.map(comment => {
+        if ((action.comment) && (comment) && (comment.id === action.comment.id)) {
+          comment.voteScore = action.comment.voteScore
+          return comment
+        }
+        return comment
+      })
     default:
       return state
   }

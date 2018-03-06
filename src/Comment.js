@@ -21,7 +21,7 @@ class Comment extends Component{
               </div>
               <div>
                 <div>{this.props.comment.body}</div>
-                <UpAndDownVote />
+                <UpAndDownVote voteScore={this.props.comment.voteScore} comment={this.props.comment}/>
               </div>
             </div>
           }
