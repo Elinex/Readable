@@ -1,22 +1,26 @@
 import React, { Component } from 'react'
 import './App.css'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Post from './posts/Post'
 import sortBy from 'sort-by'
-// import DropDownMenu from 'material-ui/DropDownMenu'
-// import MenuItem from 'material-ui/MenuItem'
-// import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
-// import * as dataAPI from './dataAPI'
-// import { getCategoriesAction } from './categories/actions'
-// import { getPostsAction } from './posts/actions'
-// import { getCommentsAction } from './comments/actions'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
+import * as dataAPI from './dataAPI'
+import { getCategories } from './categories/actions'
+import { getPostsAction } from './posts/actions'
+import { getCommentsAction } from './comments/actions'
 
 
 export class MainView extends Component {
   state = {
     valueSortPosts: 'Sort posts by',
     valueCategory: 'none'
+  }
+
+  componentWillMount(){
+    this.props.getCategories()
   }
 
   // componentWillMount(){
@@ -59,6 +63,7 @@ export class MainView extends Component {
   }
 
   render() {
+    console.log(this.props);
 
     return (
       <div>Mainview component</div>
@@ -101,4 +106,22 @@ export class MainView extends Component {
   }
 }
 
-export default MainView
+function mapStateToProps(state){
+  return {
+    categories: state.categories.reduce((acc,cur) => {
+      return acc.concat(cur.name)
+    }, [])
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    // getPosts: (postsList) => dispatch(getPostsAction(postsList)),
+    // getCommentsByPost: (commentsList) => dispatch(getCommentsAction(commentsList)),
+    getCategories: (categoriesList) => dispatch(getCategories(categoriesList))
+  }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView)
