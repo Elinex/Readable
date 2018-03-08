@@ -19,10 +19,6 @@ export class MainView extends Component {
     valueCategory: 'none'
   }
 
-  componentWillMount(){
-    this.props.getCategories()
-  }
-
   // componentWillMount(){
   //   dataAPI.getPostsAPI().then(postsList => {
   //     this.props.dispatch(getPostsAction(postsList))
@@ -63,7 +59,6 @@ export class MainView extends Component {
   }
 
   render() {
-    console.log(this.props);
 
     return (
       <div>Mainview component</div>
@@ -106,22 +101,4 @@ export class MainView extends Component {
   }
 }
 
-function mapStateToProps(state){
-  return {
-    categories: state.categories.reduce((acc,cur) => {
-      return acc.concat(cur.name)
-    }, [])
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    // getPosts: (postsList) => dispatch(getPostsAction(postsList)),
-    // getCommentsByPost: (commentsList) => dispatch(getCommentsAction(commentsList)),
-    getCategories: (categoriesList) => dispatch(getCategories(categoriesList))
-  }
-}
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainView)
+export default MainView

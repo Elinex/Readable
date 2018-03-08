@@ -8,10 +8,18 @@ import Post from './posts/Post'
 import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
 import { Link } from 'react-router-dom'
+import { getCategories } from './categories/actions'
+import { getPosts } from './posts/actions'
 
 export class App extends Component {
 
+  componentWillMount(){
+    this.props.getCategories()
+    this.props.getPosts()
+  }
+
   render() {
+    console.log(this.props);
 
     return (
       <BrowserRouter>
@@ -76,4 +84,22 @@ export class App extends Component {
   }
 }
 
-export default App
+function mapStateToProps(state){
+  return {
+    ...state,
+    categories: state.categories.reduce((acc,cur) => {
+      return acc.concat(cur.name)
+    }, [])
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    // getPosts: (postsList) => dispatch(getPostsAction(postsList)),
+    // getCommentsByPost: (commentsList) => dispatch(getCommentsAction(commentsList)),
+    getCategories: (categoriesList) => dispatch(getCategories(categoriesList)),
+    getPosts: (postsList) => dispatch(getPosts(postsList)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

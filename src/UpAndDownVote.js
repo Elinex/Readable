@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import FlatButton from 'material-ui/FlatButton'
 // import { connect } from 'react-redux'
 import { votePostAPI, voteCommentAPI } from './dataAPI'
-import { editPostVote } from './posts/actions'
+import { votePostAction } from './posts/actions'
 import { editCommentVote } from './comments/actions'
 
 const style = {
@@ -34,7 +34,7 @@ class UpAndDownVote extends Component{
     if (this.props.post) {
       votePostAPI(this.props.post).then(res => {
         res.voteScore = this.state.voteScore
-        return this.props.dispatch(editPostVote(res))
+        return this.props.dispatch(votePostAction(res))
       })
     }
     if (this.props.comment) {
