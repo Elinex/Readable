@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import FlatButton from 'material-ui/FlatButton'
-import { connect } from 'react-redux'
+// import FlatButton from 'material-ui/FlatButton'
+// import { connect } from 'react-redux'
 import { votePostAPI, voteCommentAPI } from './dataAPI'
-import { editPostVote, editCommentVote } from './actions'
+import { editPostVote } from './posts/actions'
+import { editCommentVote } from './comments/actions'
 
 const style = {
   textTransform: 'capitalize',
@@ -45,21 +46,15 @@ class UpAndDownVote extends Component{
   }
 
   render(){
-    console.log(this.state);
 
     return (
-      <div>
-        <FlatButton label='upvote' labelStyle={style} onClick={this.upVote}/>
-        <FlatButton label='downvote' labelStyle={style} onClick={this.downVote}/>
-      </div>
+      <div>UpAndDownVote component</div>
+      // <div>
+      //   <FlatButton label='upvote' labelStyle={style} onClick={this.upVote}/>
+      //   <FlatButton label='downvote' labelStyle={style} onClick={this.downVote}/>
+      // </div>
     )
   }
 }
 
-function mapStateToProps(state){
-  return {
-    ...state
-  }
-}
-
-export default connect(mapStateToProps)(UpAndDownVote)
+export default UpAndDownVote
