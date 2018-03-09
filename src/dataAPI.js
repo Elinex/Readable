@@ -89,9 +89,9 @@ export const votePostAPI = (id, option) =>
 
 // | `POST /comments/:id` | Used for voting on a comment. |
 // **option** - [String]: Either `"upVote"` or `"downVote"`.  |
-export const voteCommentAPI = (comment) =>
-  fetch(`${api}/comments/${comment.id}`, {
+export const voteCommentAPI = (id, option) =>
+  fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: headersPost,
-    body: JSON.stringify(comment)
+    body: JSON.stringify(id)
   }).then(res => res.json())

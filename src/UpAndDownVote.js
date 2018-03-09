@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 // import { connect } from 'react-redux'
 import { votePostAPI, voteCommentAPI } from './dataAPI'
 import { votePostAction } from './posts/actions'
-import { editCommentVote } from './comments/actions'
+import { voteComment } from './comments/actions'
 
 const style = {
   textTransform: 'capitalize',
@@ -40,7 +40,7 @@ class UpAndDownVote extends Component{
     if (this.props.comment) {
       voteCommentAPI(this.props.comment).then(res => {
         res.voteScore = this.state.voteScore
-        return this.props.dispatch(editCommentVote(res))
+        return this.props.dispatch(voteComment(res))
       })
     }
   }

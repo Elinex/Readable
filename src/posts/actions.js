@@ -4,7 +4,7 @@ export const GET_POSTS = 'GET_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const EDIT_POST = 'EDIT_POST'
-export const EDIT_VOTE = 'EDIT_VOTE'
+export const EDIT_VOTE_POST = 'EDIT_VOTE_POST'
 
 export const getPostsAction = (postsList) => {
   return {
@@ -36,7 +36,7 @@ export const editPostAction = (post) => {
 
 export const votePostAction = (post) => {
   return {
-    type: EDIT_VOTE,
+    type: EDIT_VOTE_POST,
     post
   }
 }

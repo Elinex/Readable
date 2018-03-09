@@ -84,22 +84,17 @@ export class App extends Component {
   }
 }
 
-function mapStateToProps(state){
-  return {
-    ...state,
-    categories: state.categories.reduce((acc,cur) => {
-      return acc.concat(cur.name)
-    }, [])
-  }
-}
+// function mapStateToProps(state){
+//   return {
+//     posts: state.posts,
+//   }
+// }
 
 function mapDispatchToProps(dispatch) {
   return {
-    // getPosts: (postsList) => dispatch(getPostsAction(postsList)),
-    // getCommentsByPost: (commentsList) => dispatch(getCommentsAction(commentsList)),
     getCategories: (categoriesList) => dispatch(getCategories(categoriesList)),
     getPosts: (postsList) => dispatch(getPosts(postsList)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(null, mapDispatchToProps)(App)

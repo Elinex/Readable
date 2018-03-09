@@ -3,7 +3,7 @@ import {
   ADD_POST,
   REMOVE_POST,
   EDIT_POST,
-  EDIT_VOTE
+  EDIT_VOTE_POST
 } from './actions'
 
 export const posts = (state = [], action) => {
@@ -23,7 +23,7 @@ export const posts = (state = [], action) => {
         }
         return post
       })
-    case EDIT_VOTE:
+    case EDIT_VOTE_POST:
     return state.map(post => {
       if ((action.post) && (post) && (post.id === action.post.id)) {
         post.voteScore = action.post.voteScore
