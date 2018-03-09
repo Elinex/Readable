@@ -34,6 +34,13 @@ export class App extends Component {
             )}
           />
 
+          <Route exact path='/posts/:id'
+            render={({match}) => (
+              // <div>{JSON.stringify(match.params.id)}</div>
+              <Post postId={match.params.id}/>
+            )}
+          />
+
           <Route exact path='/addPost'
             render={() => (
               <AddPost />

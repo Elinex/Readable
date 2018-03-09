@@ -2,15 +2,9 @@ const api = "http://localhost:3001"
 
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Whatever'
-}
-
-const headersPost = {
-  'Accept': 'application/json',
   'Authorization': 'Whatever',
   'Content-Type': 'application/json'
 }
-
 
 // | `GET /categories` |
 // Get all of the categories available for the app. List is found in `categories.js`.
@@ -29,7 +23,7 @@ export const getCategoriesAPI = () =>
 export const postPostAPI = (post) =>
   fetch(`${api}/posts`, {
     method: 'POST',
-    headers: headersPost,
+    headers: headers,
     body: JSON.stringify(post)
   }).then(res => res.json())
 
@@ -38,6 +32,12 @@ export const postPostAPI = (post) =>
 // is selected. |  |
 export const getPostsAPI = () =>
   fetch(`${api}/posts`, { headers })
+    .then(res => res.json())
+
+
+// | `GET /posts/:id` | Get the details of a single post. | |
+export const getPostDetailAPI = (postId) =>
+  fetch(`${api}/posts/${postId}`, { headers })
     .then(res => res.json())
 
 
@@ -62,7 +62,7 @@ export const removePostAPI = (postID) =>
 export const editPostAPI = (id, post) =>
   fetch(`${api}/posts/${id}`, {
     method: 'PUT',
-    headers: headersPost,
+    headers: headers,
     body: JSON.stringify(post)
   }).then(res => res.json())
 
@@ -74,7 +74,7 @@ export const editPostAPI = (id, post) =>
 export const addCommentAPI = (comment) =>
   fetch(`${api}/comments`, {
     method: 'POST',
-    headers: headersPost,
+    headers: headers,
     body: JSON.stringify(comment)
   }).then(res => res.json())
 
@@ -83,7 +83,7 @@ export const addCommentAPI = (comment) =>
 export const votePostAPI = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
-    headers: headersPost,
+    headers: headers,
     body: JSON.stringify(id)
   }).then(res => res.json())
 
@@ -92,6 +92,6 @@ export const votePostAPI = (id, option) =>
 export const voteCommentAPI = (id, option) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
-    headers: headersPost,
+    headers: headers,
     body: JSON.stringify(id)
   }).then(res => res.json())

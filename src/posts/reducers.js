@@ -1,5 +1,6 @@
 import {
   GET_POSTS,
+  GET_POST_DETAIL,
   ADD_POST,
   REMOVE_POST,
   EDIT_POST,
@@ -31,6 +32,15 @@ export const posts = (state = [], action) => {
       }
       return post
     })
+    default:
+      return state
+  }
+}
+
+export const post = (state = [], action) => {
+  switch (action.type) {
+    case GET_POST_DETAIL:
+      return action.post
     default:
       return state
   }

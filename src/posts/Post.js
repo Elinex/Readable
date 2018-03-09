@@ -11,6 +11,7 @@ import { removePostAction } from './actions'
 import * as dataAPI from '../dataAPI'
 // import NewComment from './comments/NewComment'
 import RemovePost from './RemovePost'
+import { getPostDetailAction } from './actions'
 
 const labelStyle = {
   textTransform: 'capitalize',
@@ -27,82 +28,97 @@ class Post extends Component{
   //     })
   //   }
   // }
+  componentWillMount(){
+    dataAPI.getPostDetailAPI(this.props.postId)
+      .then(res => this.props.dispatch(getPostDetailAction(res)))
+  }
+
 
   render (){
+    console.log(this.props);
+    // const post = this.props.posts.filter(post => (post.id === this.props.postId))
 
     return (
-      <Card style={{fontSize: 14}}>
-        <CardHeader
-          title={this.props.post.author.toUpperCase()}
-          titleColor='pink'
-          titleStyle={{fontWeight: 'bold'}}
-          subtitle={
-            <div>
-              <div>
-                {`Posted in ${this.props.post.category} category`}
-              </div>
-              <div >
-                {dateToString(this.props.post.timestamp).slice(0, 15)}
-              </div>
-            </div>
-          }
-          children={
-            <div>
-              <div>
-                <h3>{this.props.post.title}</h3>
-              </div>
-              <div style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
-                <p>
-                  {this.props.post.body}
-                </p>
-                <UpAndDownVote voteScore={this.props.post.voteScore} post={this.props.post}/>
-              </div>
-            </div>
-
-          }
-          avatar={
-            <Avatar backgroundColor={'rgb(232, 232, 232)'} color='black'>
-              <div>
-                <div style={{fontSize: 8}}>
-                  Score
-                </div>
-                <div>
-                  {this.props.post.voteScore}
-                </div>
-              </div>
-            </Avatar>}
-        />
-        <div style={{display: 'inline-flex'}}>
-          <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />} />
-          <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postID={this.props.post.id}/>} />
-          {/* <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>} /> */}
-        </div>
-        <CardHeader
-          subtitle='Post comments'
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-        {/* <CardText expandable={true}>
-          {(this.props.comments.length > 0) && (
-            this.props.comments.filter(comment => (comment.parentId === this.props.post.id))
-            .map(comment => {
-              return (
-                <Comment key={comment.id} comment={comment} />
-              )
-            })
-          )}
-          {(this.props.comments.filter(comment => (comment.parentId === this.props.post.id)).length === 0) && (
-            <div>
-              <div>No comments.</div>
-              <div>Make one!</div>
-            </div>
-          )}
-        </CardText> */}
-      </Card>
+      <div>oi</div>
+      // <Card style={{fontSize: 14}}>
+      //   <CardHeader
+      //     title={this.props.post.author.toUpperCase()}
+      //     titleColor='pink'
+      //     titleStyle={{fontWeight: 'bold'}}
+      //     subtitle={
+      //       <div>
+      //         <div>
+      //           {`Posted in ${this.props.post.category} category`}
+      //         </div>
+      //         <div >
+      //           {dateToString(this.props.post.timestamp).slice(0, 15)}
+      //         </div>
+      //       </div>
+      //     }
+      //     children={
+      //       <div>
+      //         <div>
+      //           <h3>{this.props.post.title}</h3>
+      //         </div>
+      //         <div style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
+      //           <p>
+      //             {this.props.post.body}
+      //           </p>
+      //           <UpAndDownVote voteScore={this.props.post.voteScore} post={this.props.post}/>
+      //         </div>
+      //       </div>
+      //
+      //     }
+      //     avatar={
+      //       <Avatar backgroundColor={'rgb(232, 232, 232)'} color='black'>
+      //         <div>
+      //           <div style={{fontSize: 8}}>
+      //             Score
+      //           </div>
+      //           <div>
+      //             {this.props.post.voteScore}
+      //           </div>
+      //         </div>
+      //       </Avatar>}
+      //   />
+      //   <div style={{display: 'inline-flex'}}>
+      //     <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />} />
+      //     <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postID={this.props.post.id}/>} />
+      //     {/* <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>} /> */}
+      //   </div>
+      //   <CardHeader
+      //     subtitle='Post comments'
+      //     actAsExpander={true}
+      //     showExpandableButton={true}
+      //   />
+      //   <CardText expandable={true}>
+      //     {(this.props.comments.length > 0) && (
+      //       this.props.comments.filter(comment => (comment.parentId === this.props.post.id))
+      //       .map(comment => {
+      //         return (
+      //           <Comment key={comment.id} comment={comment} />
+      //         )
+      //       })
+      //     )}
+      //     {(this.props.comments.filter(comment => (comment.parentId === this.props.post.id)).length === 0) && (
+      //       <div>
+      //         <div>No comments.</div>
+      //         <div>Make one!</div>
+      //       </div>
+      //     )}
+      //   </CardText>
+      // </Card>
     )
   }
 }
 
+function mapStateToProps(state, ownProps){
+  // return {
+  //   post: state.posts.filter(post => (post.id === ownProps.postId))
+  // }
+  return {
+    post: state.post
+  }
+}
 
-
-export default Post
+export default connect(mapStateToProps)(Post)

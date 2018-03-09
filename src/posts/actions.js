@@ -1,6 +1,7 @@
 import * as dataAPI from '../dataAPI'
 
 export const GET_POSTS = 'GET_POSTS'
+export const GET_POST_DETAIL = 'GET_POST_DETAIL'
 export const ADD_POST = 'ADD_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const EDIT_POST = 'EDIT_POST'
@@ -10,6 +11,13 @@ export const getPostsAction = (postsList) => {
   return {
     type: GET_POSTS,
     postsList
+  }
+}
+
+export const getPostDetailAction = (post) => {
+  return {
+    type: GET_POST_DETAIL,
+    post
   }
 }
 
