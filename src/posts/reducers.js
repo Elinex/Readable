@@ -14,7 +14,7 @@ export const posts = (state = [], action) => {
     case ADD_POST:
       return state.concat(action.post)
     case REMOVE_POST:
-      return state.filter(post => action.post.id !== post.id)
+      return state.filter(post => (action.post.id !== post.id))
     case EDIT_POST:
       return state.map(post => {
         if (post.id === action.post.id) {
@@ -41,6 +41,9 @@ export const post = (state = {}, action) => {
   switch (action.type) {
     case GET_POST_DETAIL:
       return action.post
+    case EDIT_POST:
+      state = action.post
+      return state
     default:
       return state
   }

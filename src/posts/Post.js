@@ -7,10 +7,12 @@ import Comment from '../comments/Comment'
 import { connect } from 'react-redux'
 import UpAndDownVote from '../UpAndDownVote'
 import { Link } from 'react-router-dom'
-import { removePostAction } from './actions'
+// import { removePostAction } from './actions'
 import * as dataAPI from '../dataAPI'
 import NewComment from '../comments/NewComment'
 import RemovePost from './RemovePost'
+import EditPost from './EditPost'
+import { getCommentsAction } from '../comments/actions'
 import { getPostDetailAction } from './actions'
 
 const labelStyle = {
@@ -23,15 +25,18 @@ class Post extends Component{
 // ideia do Lucas: editar post ao invés de fazer essa funçao
   // removePost = () => {
   //   if (window.confirm('Are you sure to remove this post?')){
-  //     return dataAPI.removePostAPI(this.props.post.id).then(res => {
+  //     return dataAPI.removePostAPI(this.props.posts.id).then(res => {
   //       return this.props.dispatch(removePostAction(res))
   //     })
   //   }
   // }
   componentWillMount(){
+
     dataAPI.getPostDetailAPI(this.props.postId)
       .then(res => this.props.dispatch(getPostDetailAction(res)))
-    console.log(this.props)
+
+    dataAPI.getCommentsAPI(this.props.postId)
+      .then(res => this.props.dispatch(getCommentsAction(res)))
   }
 
 
@@ -83,7 +88,7 @@ class Post extends Component{
                 </Avatar>}
             />
             <div style={{display: 'inline-flex'}}>
-              <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<Link to={`/editPost/${this.props.post.id}`} />} />
+              <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditPost postId={this.props.post.id}/>} />
               <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postID={this.props.post.id}/>} />
               <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentID={this.props.post.id}/>} />
             </div>
@@ -92,6 +97,21 @@ class Post extends Component{
               actAsExpander={true}
               showExpandableButton={true}
             />
+            <CardText expandable={true}>
+              {(this.props.comments.length > 0) && (
+                this.props.comments.map(comment => {
+                  return (
+                    <Comment key={comment.id} comment={comment} />
+                  )
+                })
+              )}
+              {/* {(this.props.comments.filter(comment => (comment.parentId === this.props.posts.id)).length === 0) && (
+                <div>
+                  <div>No comments.</div>
+                  <div>Make one!</div>
+                </div>
+              )} */}
+            </CardText>
 
           </Card>
         )}
@@ -102,8 +122,15 @@ class Post extends Component{
 
 function mapStateToProps(state, ownProps){
   return {
-    post: state.post
+    post: state.post,
+    comments: state.comments.filter(comment => comment.parentId === ownProps.postId)
   }
 }
+
+// function mapDispatchToProps(dispatch){
+//   return {
+//     getComments: (postId) => dispatch(getComments(postId))
+//   }
+// }
 
 export default connect(mapStateToProps)(Post)

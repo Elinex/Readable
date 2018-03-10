@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-// import Dialog from 'material-ui/Dialog'
+import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import * as dataAPI from '../dataAPI'
 import { removePostAction } from './actions'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 const style = {
   textTransform: 'capitalize',
@@ -34,12 +34,12 @@ class RemovePost extends Component {
 
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="No"
         primary={true}
         onClick={this.handleClose}
       />,
       <FlatButton
-        label="OK"
+        label="Yes"
         primary={true}
         keyboardFocused={true}
         onClick={this.removePost}
@@ -47,20 +47,25 @@ class RemovePost extends Component {
     ]
 
     return (
-      <div>Remove post component</div>
-      // <div>
-      //   <FlatButton  labelStyle={style} label="Remove" onClick={this.handleOpen} />
-      //   <Dialog
-      //     title="Are you sure to remove this post?"
-      //     actions={actions}
-      //     modal={false}
-      //     open={this.state.open}
-      //     onRequestClose={this.handleClose}
-      //   >
-      //   </Dialog>
-      // </div>
+      <div>
+        <FlatButton  labelStyle={style} label="Remove" onClick={this.handleOpen} />
+        <Dialog
+          title="Are you sure to remove this post?"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+        </Dialog>
+      </div>
     )
   }
 }
 
-export default RemovePost
+function mapStateToProps(state){
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStateToProps)(RemovePost)

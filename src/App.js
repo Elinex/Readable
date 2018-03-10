@@ -16,6 +16,7 @@ export class App extends Component {
   componentWillMount(){
     this.props.getCategories()
     this.props.getPosts()
+
   }
 
   render() {

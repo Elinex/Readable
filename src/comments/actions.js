@@ -33,18 +33,6 @@ export const getComments = (parentId) => (dispatch) => {
     .then(res => dispatch(getCommentsAction(res)))
 }
 
-// | `POST /comments` |
-// | Add a comment to a post. |
-// | **id** - Any unique ID. As with posts, UUID is probably the best here. <br>
-// **timestamp** - [Timestamp] Get this however you want. <br>
-// **body** - [String] <br>
-// **author** - [String] <br>
-// **parentId** - Should match a post id in the database. |
-export const addComment = (comment) => (dispatch) => {
-  dataAPI.addCommentAPI(comment)
-    .then(res => dispatch(addCommentAction(res)))
-}
-
 // | `POST /comments/:id` | Used for voting on a comment. |
 // **option** - [String]: Either `"upVote"` or `"downVote"`.  |
 export const voteComment = (id, option) => (dispatch) => {
