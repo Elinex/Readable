@@ -37,7 +37,7 @@ export const posts = (state = [], action) => {
   }
 }
 
-export const post = (state = [], action) => {
+export const post = (state = {}, action) => {
   switch (action.type) {
     case GET_POST_DETAIL:
       return action.post

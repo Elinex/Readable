@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-// import Dialog from 'material-ui/Dialog'
-// import FlatButton from 'material-ui/FlatButton'
-// import TextField from 'material-ui/TextField'
-// import { guid } from '../helpers'
-// import * as dataAPI from './dataAPI'
-// import { addCommentAction } from './actions'
-// import { connect } from 'react-redux'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import TextField from 'material-ui/TextField'
+import { guid } from '../helpers'
+import * as dataAPI from '../dataAPI'
+import { addCommentAction } from './actions'
+import { connect } from 'react-redux'
 
 const style = {
   textTransform: 'capitalize',
@@ -58,34 +58,39 @@ class NewComment extends Component {
     ];
 
     return (
-      <div>New comment component</div>
-      // <div>
-      //   <FlatButton  labelStyle={style} label="New comment" onClick={this.handleOpen} />
-      //   <Dialog
-      //     title="Write a new comment"
-      //     actions={actions}
-      //     modal={false}
-      //     open={this.state.open}
-      //     onRequestClose={this.handleClose}
-      //   >
-      //     <TextField
-      //       id='author'
-      //       floatingLabelText="Author"
-      //       defaultValue={this.state.author}
-      //       type="text"
-      //       onChange={(event) => this.setState({author: event.target.value})}
-      //     /><br />
-      //     <TextField
-      //       id='body'
-      //       floatingLabelText="Text"
-      //       defaultValue={this.state.body}
-      //       type="text"
-      //       onChange={(event) => this.setState({body: event.target.value})}
-      //     /><br />
-      //   </Dialog>
-      // </div>
+      <div>
+        <FlatButton  labelStyle={style} label="New comment" onClick={this.handleOpen} />
+        <Dialog
+          title="Write a new comment"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+          <TextField
+            id='author'
+            floatingLabelText="Author"
+            defaultValue={this.state.author}
+            type="text"
+            onChange={(event) => this.setState({author: event.target.value})}
+          /><br />
+          <TextField
+            id='body'
+            floatingLabelText="Text"
+            defaultValue={this.state.body}
+            type="text"
+            onChange={(event) => this.setState({body: event.target.value})}
+          /><br />
+        </Dialog>
+      </div>
     )
   }
 }
 
-export default NewComment
+function mapStateToProps(state){
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStateToProps)(NewComment)

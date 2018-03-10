@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-// import { dateToString } from '../helpers'
-// import UpAndDownVote from '../UpAndDownVote'
-// import {Card, CardHeader} from 'material-ui/Card'
-// import Avatar from 'material-ui/Avatar'
+import { dateToString } from '../helpers'
+import UpAndDownVote from '../UpAndDownVote'
+import {Card, CardHeader} from 'material-ui/Card'
+import Avatar from 'material-ui/Avatar'
 
 class Comment extends Component{
 
