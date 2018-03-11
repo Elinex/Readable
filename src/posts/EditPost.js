@@ -15,8 +15,8 @@ const style = {
 class EditPost extends Component {
   state = {
     open: false,
-    title: '',
-    body: ''
+    title: this.props.post.title,
+    body: this.props.post.body
   }
 
   handleOpen = () => {
@@ -32,7 +32,7 @@ class EditPost extends Component {
       body: this.state.body,
       title: this.state.title,
     }
-    dataAPI.editPostAPI(this.props.postId, editedPost).then(res => {
+    dataAPI.editPostAPI(this.props.post.id, editedPost).then(res => {
       this.props.dispatch(editPostAction(res))
     })
     this.setState({open: false})
@@ -54,6 +54,8 @@ class EditPost extends Component {
       />,
     ];
 
+    console.log(this.props);
+
     return (
       <div>
         <FlatButton  labelStyle={style} label="Edit" onClick={this.handleOpen} />
@@ -67,14 +69,14 @@ class EditPost extends Component {
           <TextField
             id='title'
             floatingLabelText="Title"
-            defaultValue={this.state.title}
+            defaultValue={this.props.post.title}
             type="text"
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
             id='body'
             floatingLabelText="Text"
-            defaultValue={this.state.body}
+            defaultValue={this.props.post.body}
             type="text"
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
