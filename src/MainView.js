@@ -6,6 +6,8 @@ import PostResume from './posts/PostResume'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
+import FlatButton from 'material-ui/FlatButton'
+import AddPost from './posts/AddPost'
 
 export class MainView extends Component {
   state = {
@@ -58,7 +60,8 @@ export class MainView extends Component {
         {this.props.posts.map(post => {
           return <PostResume key={post.id} post={post}/>
         })}
-        <Link to='/addPost' className='btn btn-secondary btn-sm'>NEW POST</Link>
+        {/* <Link to='/addPost' className='btn btn-secondary btn-sm'>Add new post</Link> */}
+        <FlatButton label="Add new post" containerElement={<AddPost />} />
       </div>
     )
   }

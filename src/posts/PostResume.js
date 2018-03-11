@@ -12,7 +12,7 @@ class PostResume extends Component{
       <div>
         <Card style={{fontSize: 14}}>
           <CardHeader
-            title={this.props.post.author.toUpperCase()}
+            title={this.props.post.author}
             titleColor='pink'
             titleStyle={{fontWeight: 'bold'}}
             subtitle={

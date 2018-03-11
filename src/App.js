@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css'
-import AddPost from './posts/AddPost'
 import EditPost from './posts/EditPost'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
@@ -16,27 +15,7 @@ export class App extends Component {
   componentWillMount(){
     this.props.getCategories()
     this.props.getPosts()
-    // this.props.getComments()
   }
-
-  // componentDidMount(){
-  //   if (this.props.posts.length > 0){
-  //     this.props.posts.map(post => {
-  //       this.props.getComments(post.id)
-  //     })
-  //   }
-  // }
-
-  // componentWillReceiveProps(nextProps){
-  //   if (nextProps.posts.length > 0){
-  //     const a = this.props.posts.reduce((acc, cur) => {
-  //       return acc.concat(cur.id)
-  //     }, [])
-  //     console.log(a);
-  //   } else {
-  //     return null
-  //   }
-  // }
 
   render() {
     console.log(this.props);
@@ -64,12 +43,6 @@ export class App extends Component {
             )}
           />
 
-          <Route exact path='/addPost'
-            render={() => (
-              <AddPost />
-            )}
-          />
-
           <Route exact path='/editPost/:id'
             render={({match}) => (
               // <div>{JSON.stringify(match.params.id)}</div>
@@ -92,7 +65,6 @@ export class App extends Component {
               </div>
             )}
           />
-
         </div>
       </BrowserRouter>
     )
@@ -110,7 +82,6 @@ function mapDispatchToProps(dispatch) {
   return {
     getCategories: (categoriesList) => dispatch(getCategories(categoriesList)),
     getPosts: (postsList) => dispatch(getPosts(postsList)),
-    // getComments: (commentsList) => dispatch(getComments(commentsList))
   }
 }
 
