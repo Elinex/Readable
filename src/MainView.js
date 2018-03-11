@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Post from './posts/Post'
+import PostResume from './posts/PostResume'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
@@ -55,14 +55,8 @@ export class MainView extends Component {
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>
-
         {this.props.posts.map(post => {
-          return (
-            <div key={post.id}>
-              <Link to={`/posts/${post.id}`}>Post link</Link>
-            </div>
-
-          )
+          return <PostResume key={post.id} post={post}/>
         })}
         <Link to='/addPost' className='btn btn-secondary btn-sm'>NEW POST</Link>
       </div>

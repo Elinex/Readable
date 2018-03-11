@@ -1,6 +1,6 @@
 import {
   GET_POSTS,
-  GET_POST_DETAIL,
+  // GET_POST_DETAIL,
   ADD_POST,
   REMOVE_POST,
   EDIT_POST,
@@ -14,7 +14,13 @@ export const posts = (state = [], action) => {
     case ADD_POST:
       return state.concat(action.post)
     case REMOVE_POST:
-      return state.filter(post => (action.post.id !== post.id))
+      return state.map(post => {
+        if (post.id === action.post.id) {
+          post.deleted = action.post.deleted
+          return post
+        }
+        return post
+      })
     case EDIT_POST:
       return state.map(post => {
         if (post.id === action.post.id) {
@@ -37,14 +43,17 @@ export const posts = (state = [], action) => {
   }
 }
 
-export const post = (state = {}, action) => {
-  switch (action.type) {
-    case GET_POST_DETAIL:
-      return action.post
-    case EDIT_POST:
-      state = action.post
-      return state
-    default:
-      return state
-  }
-}
+// export const post = (state = {}, action) => {
+//   switch (action.type) {
+//     case GET_POST_DETAIL:
+//       return action.post
+//     case EDIT_POST:
+//       state = action.post
+//       return state
+//     case REMOVE_POST:
+//       state = action.post
+//       return state
+//     default:
+//       return state
+//   }
+// }

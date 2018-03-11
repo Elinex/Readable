@@ -33,7 +33,7 @@ class NewComment extends Component {
       timestamp: Date.now(),
       body: this.state.body,
       author: this.state.author,
-      parentId: this.props.parentID
+      parentId: this.props.parentId
     }
     dataAPI.addCommentAPI(newComment).then(res => {
       this.props.dispatch(addCommentAction(res))

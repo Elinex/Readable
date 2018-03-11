@@ -4,10 +4,9 @@ import AddPost from './posts/AddPost'
 import EditPost from './posts/EditPost'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import Post from './posts/Post'
+import PostResume from './posts/PostResume'
 import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
-import { Link } from 'react-router-dom'
 import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
 
@@ -38,7 +37,7 @@ export class App extends Component {
           <Route exact path='/posts/:id'
             render={({match}) => (
               // <div>{JSON.stringify(match.params.id)}</div>
-              <Post postId={match.params.id}/>
+              <PostResume postId={match.params.id}/>
             )}
           />
 
@@ -68,24 +67,11 @@ export class App extends Component {
                     post={post}
                   />
                 ))} */}
-                <Link to='/'>Go to MainView</Link>
+                {/* <Link to='/'>Go to MainView</Link> */}
               </div>
             )}
           />
 
-          <Route path='/posts/:id'
-            render={({match}) => (
-              <div>
-                <div>POST VISUALIZATION</div>
-                {/* {this.props.posts.filter(post => (post.id === match.params.id)).map(post => (
-                  <Post
-                    key={post.id}
-                    post={post}
-                  />
-                ))} */}
-              </div>
-            )}
-          />
         </div>
       </BrowserRouter>
     )
