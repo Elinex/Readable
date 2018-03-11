@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom'
 import { getPostDetailAction } from './actions'
 
 class PostResume extends Component{
-  
+
   render (){
-    console.log(this.props);
 
     return (
       <div>
