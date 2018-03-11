@@ -25,7 +25,6 @@ class RemovePost extends Component {
 
   removePost = () => {
     dataAPI.removePostAPI(this.props.postId).then(res => {
-      // console.log(res);
       this.props.dispatch(removePostAction(res))
     })
     this.setState({open: false})

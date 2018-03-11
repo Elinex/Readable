@@ -44,67 +44,75 @@ class PostDetail extends Component{
       }, {})
 
     return (
-      <Card style={{fontSize: 14}}>
-        <CardHeader
-          title={post.author}
-          titleColor='pink'
-          titleStyle={{fontWeight: 'bold'}}
-          subtitle={
-            <div>
-              <div>
-                {`Posted in ${post.category} category`}
-              </div>
-              <div >
-                {dateToString(post.timestamp).slice(0, 15)}
-              </div>
-            </div>
-          }
-          children={
-            <div>
-              <div>
-                <h3>{post.title}</h3>
-              </div>
-              <div style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
-                <p>
-                  {post.body}
-                </p>
-                <UpAndDownVote voteScore={post.voteScore} post={post}/>
-              </div>
-            </div>
-
-          }
-          avatar={
-            <Avatar backgroundColor={'rgb(232, 232, 232)'} color='black'>
-              <div>
-                <div style={{fontSize: 8}}>
-                  Score
-                </div>
+      <div>
+        {(post.deleted === false) && (
+          <Card style={{fontSize: 14}}>
+            <CardHeader
+              title={post.author}
+              titleColor='pink'
+              titleStyle={{fontWeight: 'bold'}}
+              subtitle={
                 <div>
-                  {post.voteScore}
+                  <div>
+                    {`Posted in ${post.category} category`}
+                  </div>
+                  <div >
+                    {dateToString(post.timestamp).slice(0, 15)}
+                  </div>
                 </div>
-              </div>
-            </Avatar>}
-        />
-        <div style={{display: 'inline-flex'}}>
-          <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditPost post={post}/>} />
-          <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postId={post.id}/>} />
-          <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} />
-        </div>
-        <CardHeader
-          subtitle='Post comments'
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-        <CardText expandable={true}>
-          {(this.props.comments.length > 0) && (
-            this.props.comments.map(comment => {
-              return (
-                <Comment key={comment.id} comment={comment} />
-              )
-            })
-          )}
-        </CardText>
-      </Card>
+              }
+              children={
+                <div>
+                  <div>
+                    <h3>{post.title}</h3>
+                  </div>
+                  <div style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
+                    <p>
+                      {post.body}
+                    </p>
+                    <UpAndDownVote voteScore={post.voteScore} post={post}/>
+                  </div>
+                </div>
+
+              }
+              avatar={
+                <Avatar backgroundColor={'rgb(232, 232, 232)'} color='black'>
+                  <div>
+                    <div style={{fontSize: 8}}>
+                      Score
+                    </div>
+                    <div>
+                      {post.voteScore}
+                    </div>
+                  </div>
+                </Avatar>}
+            />
+            <div style={{display: 'inline-flex'}}>
+              <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditPost post={post}/>} />
+              <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postId={post.id}/>} />
+              <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} />
+            </div>
+            <CardHeader
+              subtitle='Post comments'
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+              {(this.props.comments.length > 0) && (
+                this.props.comments.map(comment => {
+                  return (
+                    <Comment key={comment.id} comment={comment} />
+                  )
+                })
+              )}
+            </CardText>
+          </Card>
+        )}
+
+        {(post.deleted === true) && (
+          <div>Post deleted</div>
+        )}
+      </div>
     )
   }
 }
