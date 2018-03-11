@@ -31,13 +31,20 @@ export const posts = (state = [], action) => {
         return post
       })
     case EDIT_VOTE_POST:
-    return state.map(post => {
-      if ((action.post) && (post) && (post.id === action.post.id)) {
-        post.voteScore = action.post.voteScore
+      return state.map(post => {
+        if (post.id === action.post.id){
+          post.voteScore = action.post.voteScore
+          return post
+        }
         return post
-      }
-      return post
-    })
+      })
+      // return state.map(post => {
+      //   if ((action.post) && (post) && (post.id === action.post.id)) {
+      //     post.voteScore = action.post.voteScore
+      //     return post
+      //   }
+      //   return post
+      // })
     default:
       return state
   }

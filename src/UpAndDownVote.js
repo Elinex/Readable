@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-// import FlatButton from 'material-ui/FlatButton'
-// import { connect } from 'react-redux'
+import FlatButton from 'material-ui/FlatButton'
+import { connect } from 'react-redux'
 import { votePostAPI, voteCommentAPI } from './dataAPI'
 import { votePostAction } from './posts/actions'
 import { voteComment } from './comments/actions'
@@ -20,20 +20,23 @@ class UpAndDownVote extends Component{
     this.setState({
       voteScore: this.state.voteScore + 1
     })
-    this.changeVoteScore()
+    const option = 'upVote'
+    this.changeVoteScore(option)
   }
 
   downVote = () => {
     this.setState({
       voteScore: this.state.voteScore - 1
     })
-    this.changeVoteScore()
+    const option = 'downVote'
+    this.changeVoteScore(option)
   }
 
-  changeVoteScore = () => {
+  changeVoteScore = (option) => {
     if (this.props.post) {
-      votePostAPI(this.props.post).then(res => {
+      votePostAPI(this.props.post.id, option).then(res => {
         res.voteScore = this.state.voteScore
+        console.log(res);
         return this.props.dispatch(votePostAction(res))
       })
     }
@@ -48,13 +51,18 @@ class UpAndDownVote extends Component{
   render(){
 
     return (
-      <div>UpAndDownVote component</div>
-      // <div>
-      //   <FlatButton label='upvote' labelStyle={style} onClick={this.upVote}/>
-      //   <FlatButton label='downvote' labelStyle={style} onClick={this.downVote}/>
-      // </div>
+      <div>
+        <FlatButton label='upvote' labelStyle={style} onClick={this.upVote}/>
+        <FlatButton label='downvote' labelStyle={style} onClick={this.downVote}/>
+      </div>
     )
   }
 }
 
-export default UpAndDownVote
+function mapStateToProps(state){
+  return {
+    ...state
+  }
+}
+
+export default connect(mapStateToProps)(UpAndDownVote)

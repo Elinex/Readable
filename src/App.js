@@ -8,10 +8,8 @@ import PostResume from './posts/PostResume'
 import PostDetail from './posts/PostDetail'
 import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
-import * as dataAPI from './dataAPI'
 import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
-import { getComments } from './comments/actions'
 
 export class App extends Component {
 

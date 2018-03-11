@@ -6,14 +6,11 @@ import { dateToString } from '../helpers'
 import Comment from '../comments/Comment'
 import { connect } from 'react-redux'
 import UpAndDownVote from '../UpAndDownVote'
-import { Link } from 'react-router-dom'
-// import { removePostAction } from './actions'
 import * as dataAPI from '../dataAPI'
 import NewComment from '../comments/NewComment'
 import RemovePost from './RemovePost'
 import EditPost from './EditPost'
 import { getCommentsAction } from '../comments/actions'
-import { getPostDetailAction } from './actions'
 
 const labelStyle = {
   textTransform: 'capitalize',

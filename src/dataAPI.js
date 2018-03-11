@@ -84,7 +84,7 @@ export const votePostAPI = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(id)
+    // body: JSON.stringify(post)
   }).then(res => res.json())
 
 // | `POST /comments/:id` | Used for voting on a comment. |
