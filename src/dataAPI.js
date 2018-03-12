@@ -93,5 +93,5 @@ export const voteCommentAPI = (id, option) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(id)
+    // body: JSON.stringify(id)
   }).then(res => res.json())
