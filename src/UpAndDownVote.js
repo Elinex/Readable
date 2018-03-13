@@ -42,7 +42,7 @@ class UpAndDownVote extends Component{
     if (this.props.comment) {
       voteCommentAPI(this.props.comment.id, option).then(res => {
         res.voteScore = this.state.voteScore
-        return this.props.dispatch(voteCommentAction(res))
+        return this.props.dispatch(voteCommentAction(this.props.comment.id, this.props.comment.parentId, res))
       })
     }
   }

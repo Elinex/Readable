@@ -28,13 +28,16 @@ class PostDetail extends Component{
   //     })
   //   }
   // }
-  componentDidMount(){
+  componentWillMount(){
     dataAPI.getCommentsAPI(this.props.postId)
-      .then(res => this.props.dispatch(getCommentsAction(res)))
+      .then(res =>
+        // console.log(this.props)
+        this.props.dispatch(getCommentsAction(this.props.postId, res))
+      )
   }
 
   render (){
-    console.log(this.props);
+    console.log(this.props.comments[this.props.postId]);
     const post = this.props.posts.filter(post => post.id === this.props.postId)
       .reduce((acc, cur) => {
         return cur
@@ -95,11 +98,9 @@ class PostDetail extends Component{
               showExpandableButton={true}
             />
             <CardText expandable={true}>
-              {(this.props.comments.length > 0) && (
-                this.props.comments.map(comment => {
-                  return (
-                    <Comment key={comment.id} comment={comment} />
-                  )
+              {(this.props.comments[this.props.postId]) && (
+                this.props.comments[this.props.postId].map(comment => {
+                  return <Comment key={comment.id} comment={comment} />
                 })
               )}
             </CardText>
