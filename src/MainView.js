@@ -60,7 +60,6 @@ export class MainView extends Component {
         {this.props.posts.map(post => {
           return <PostResume key={post.id} post={post}/>
         })}
-        {/* <Link to='/addPost' className='btn btn-secondary btn-sm'>Add new post</Link> */}
         <FlatButton label="Add new post" containerElement={<AddPost />} />
       </div>
     )
@@ -72,8 +71,6 @@ function mapStateToProps(state){
     categories: state.categories.reduce((acc,cur) => {
       return acc.concat(cur.name)
     }, []),
-    posts: state.posts,
-    comments: state.comments
   }
 }
 

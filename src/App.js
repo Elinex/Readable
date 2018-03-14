@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import EditPost from './posts/EditPost'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
-import PostResume from './posts/PostResume'
+import { Route } from 'react-router-dom'
 import PostDetail from './posts/PostDetail'
 import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
@@ -18,7 +17,6 @@ export class App extends Component {
   }
 
   render() {
-    console.log(this.props);
 
     return (
       <BrowserRouter>
@@ -29,7 +27,7 @@ export class App extends Component {
 
           <Route exact path='/'
             render={() => (
-              <MainView />
+              <MainView posts={this.props.posts}/>
             )}
           />
 
@@ -37,7 +35,6 @@ export class App extends Component {
             render={({match}) => (
               // <div>{JSON.stringify(match.params.id)}</div>
               <PostDetail
-                // post={this.props.posts.filter(post => post.id === match.params.id)[0]}
                 postId={match.params.id}
               />
             )}
@@ -45,7 +42,6 @@ export class App extends Component {
 
           <Route exact path='/editPost/:id'
             render={({match}) => (
-              // <div>{JSON.stringify(match.params.id)}</div>
               <EditPost
                 postID={match.params.id}
               />
@@ -54,15 +50,8 @@ export class App extends Component {
 
           <Route path='/:category/posts'
             render={({match}) => (
-              // <div>{JSON.stringify(match.params.category)}</div>
-              <div>
-                <div>Posts by {match.params.category} category</div>
-                {this.props.posts.filter(post => (post.category === match.params.category))
-                    .map(post => (
-                      <PostResume key={post.id} post={post}/>
-                ))}
-                <Link to='/'>Go to MainView</Link>
-              </div>
+              <MainView posts={this.props.posts.filter(post =>
+                (post.category === match.params.category))}/>
             )}
           />
         </div>
