@@ -3,6 +3,13 @@ import { dateToString } from '../helpers'
 import UpAndDownVote from '../UpAndDownVote'
 import {Card, CardHeader} from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
+import FlatButton from 'material-ui/FlatButton'
+import EditComment from './EditComment'
+
+const labelStyle = {
+  textTransform: 'capitalize',
+  color: 'pink'
+}
 
 class Comment extends Component{
 
@@ -38,6 +45,10 @@ class Comment extends Component{
             </Avatar>
           }
         />
+        <div style={{display: 'inline-flex'}}>
+          <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditComment comment={this.props.comment}/>} />
+          {/* <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postId={post.id}/>} /> */}
+        </div>
       </Card>
     )
   }
