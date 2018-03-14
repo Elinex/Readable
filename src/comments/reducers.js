@@ -3,6 +3,17 @@ import {
   ADD_COMMENT,
   EDIT_VOTE_COMMENT
 } from './actions'
+//
+// export const voteCommentAction = (commentId, postId, comment) => {
+//   return {
+//     type: EDIT_VOTE_COMMENT,
+//     commentId,
+//     postId,
+//     comment
+//   }
+// }
+//
+// state.comments = {[postId]: [{} , {}] }
 
 export const comments = (state = {}, action) => {
   switch (action.type) {
@@ -24,7 +35,8 @@ export const comments = (state = {}, action) => {
       // })
       return {
         ...state,
-        [action.postId]: state[action.postId].filter(comment => (comment.id !== action.commentId)).concat(action.comment)
+        [action.comment.parentId]: state[action.comment.parentId].filter(comment =>
+          (comment.id !== action.comment.id)).concat(action.comment)
       }
     default:
       return state

@@ -19,25 +19,15 @@ const labelStyle = {
 
 class PostDetail extends Component{
 
-
-// ideia do Lucas: editar post ao invés de fazer essa funçao
-  // removePost = () => {
-  //   if (window.confirm('Are you sure to remove this post?')){
-  //     return dataAPI.removePostAPI(this.props.posts.id).then(res => {
-  //       return this.props.dispatch(removePostAction(res))
-  //     })
-  //   }
-  // }
   componentWillMount(){
     dataAPI.getCommentsAPI(this.props.postId)
       .then(res =>
-        // console.log(this.props)
         this.props.dispatch(getCommentsAction(this.props.postId, res))
       )
   }
 
   render (){
-    console.log(this.props.comments[this.props.postId]);
+
     const post = this.props.posts.filter(post => post.id === this.props.postId)
       .reduce((acc, cur) => {
         return cur

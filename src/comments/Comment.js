@@ -6,12 +6,9 @@ import Avatar from 'material-ui/Avatar'
 
 class Comment extends Component{
 
-  // <Comment key={comment.id} comment={comment} />
-
   render (){
 
     return (
-      // <div>Comment component</div>
 
       <Card style={{backgroundColor: 'rgb(232, 232, 232)'}}>
         <CardHeader

@@ -17,11 +17,9 @@ export const addCommentAction = (comment) => {
   }
 }
 
-export const voteCommentAction = (commentId, postId, comment) => {
+export const voteCommentAction = (comment) => {
   return {
     type: EDIT_VOTE_COMMENT,
-    commentId,
-    postId,
     comment
   }
 }

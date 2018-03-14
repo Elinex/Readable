@@ -18,18 +18,16 @@ class UpAndDownVote extends Component{
 
   upVote = () => {
     this.setState({
-      voteScore: this.state.voteScore + 1
+      voteScore: (this.state.voteScore + 1)
     })
-    const option = 'upVote'
-    this.changeVoteScore(option)
+    this.changeVoteScore('upVote')
   }
 
   downVote = () => {
     this.setState({
-      voteScore: this.state.voteScore - 1
+      voteScore: (this.state.voteScore - 1)
     })
-    const option = 'downVote'
-    this.changeVoteScore(option)
+    this.changeVoteScore('downVote')
   }
 
   changeVoteScore = (option) => {
@@ -42,12 +40,13 @@ class UpAndDownVote extends Component{
     if (this.props.comment) {
       voteCommentAPI(this.props.comment.id, option).then(res => {
         res.voteScore = this.state.voteScore
-        return this.props.dispatch(voteCommentAction(this.props.comment.id, this.props.comment.parentId, res))
+        return this.props.dispatch(voteCommentAction(res))
       })
     }
   }
 
   render(){
+    console.log(this.props);
 
     return (
       <div>
