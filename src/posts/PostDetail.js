@@ -80,7 +80,7 @@ class PostDetail extends Component{
             <div style={{display: 'inline-flex'}}>
               <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditPost post={post}/>} />
               <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postId={post.id}/>} />
-              <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} />
+              {/* <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} /> */}
             </div>
             <CardHeader
               subtitle='Post comments'
@@ -88,11 +88,14 @@ class PostDetail extends Component{
               showExpandableButton={true}
             />
             <CardText expandable={true}>
-              {(this.props.comments[this.props.postId]) && (
-                this.props.comments[this.props.postId].map(comment => {
-                  return <Comment key={comment.id} comment={comment} />
-                })
-              )}
+              <div>
+                {(this.props.comments[this.props.postId]) && (
+                  this.props.comments[this.props.postId].map(comment => {
+                    return <Comment key={comment.id} comment={comment} />
+                  })
+                )}
+                <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} />
+              </div>
             </CardText>
           </Card>
         )}
