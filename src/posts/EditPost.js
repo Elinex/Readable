@@ -51,9 +51,7 @@ class EditPost extends Component {
         keyboardFocused={true}
         onClick={this.editPost}
       />,
-    ];
-
-    console.log(this.props);
+    ]
 
     return (
       <div>

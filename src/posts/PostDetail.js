@@ -7,7 +7,7 @@ import Comment from '../comments/Comment'
 import { connect } from 'react-redux'
 import UpAndDownVote from '../UpAndDownVote'
 import * as dataAPI from '../dataAPI'
-import NewComment from '../comments/NewComment'
+import AddComment from '../comments/AddComment'
 import RemovePost from './RemovePost'
 import EditPost from './EditPost'
 import { getCommentsAction } from '../comments/actions'
@@ -93,7 +93,7 @@ class PostDetail extends Component{
                     return <Comment key={comment.id} comment={comment} />
                   })
                 )}
-                <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} />
+                <FlatButton label="Add comment" labelStyle={labelStyle} containerElement={<AddComment parentId={post.id}/>} />
               </div>
             </CardText>
           </Card>

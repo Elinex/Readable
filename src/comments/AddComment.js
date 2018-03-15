@@ -12,7 +12,7 @@ const style = {
   color: 'pink'
 }
 
-class NewComment extends Component {
+class AddComment extends Component {
   state = {
     open: false,
     author: '',
@@ -59,7 +59,7 @@ class NewComment extends Component {
 
     return (
       <div>
-        <FlatButton  labelStyle={style} label="New comment" onClick={this.handleOpen} />
+        <FlatButton  labelStyle={style} label="Add comment" onClick={this.handleOpen} />
         <Dialog
           title="Write a new comment"
           actions={actions}
@@ -93,4 +93,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(NewComment)
+export default connect(mapStateToProps)(AddComment)

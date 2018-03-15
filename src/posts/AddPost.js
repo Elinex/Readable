@@ -74,7 +74,7 @@ class AddPost extends Component {
         keyboardFocused={true}
         onClick={this.addPost}
       />,
-    ];
+    ]
 
     return (
       <div>

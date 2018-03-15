@@ -24,7 +24,8 @@ export class MainView extends Component {
   changeCategory = (event, index, value) => this.setState({valueCategory: value})
 
   render() {
-    console.log(this.props);
+
+    const { posts, categories } = this.props
 
     return (
       <div>
@@ -45,7 +46,7 @@ export class MainView extends Component {
               onChange={this.changeCategory}
             >
               <MenuItem value={this.state.valueCategory} primaryText='Posts by category' disabled={true} />
-              {this.props.categories.map(category => {
+              {categories.map(category => {
                 return (
                   <MenuItem
                     key={category}
@@ -57,7 +58,7 @@ export class MainView extends Component {
             </DropDownMenu>
           </ToolbarGroup>
         </Toolbar>
-        {this.props.posts.map(post => {
+        {posts.map(post => {
           return <PostResume key={post.id} post={post}/>
         })}
         <FlatButton label="Add new post" containerElement={<AddPost />} />

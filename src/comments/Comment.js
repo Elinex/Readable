@@ -16,21 +16,23 @@ class Comment extends Component{
 
   render (){
 
+    const { comment } = this.props
+
     return (
       <div>
-        {(this.props.comment.deleted === false) && (
+        {(comment.deleted === false) && (
           <Card style={{backgroundColor: 'rgb(232, 232, 232)'}}>
             <CardHeader
               subtitle={
                 <div>
                   <div>
-                    <b>{this.props.comment.author} </b>
+                    <b>{comment.author} </b>
                      commented on
-                    <b> {dateToString(this.props.comment.timestamp).slice(0, 15)}</b>
+                    <b> {dateToString(comment.timestamp).slice(0, 15)}</b>
                   </div>
                   <div>
-                    <div>{this.props.comment.body}</div>
-                    <UpAndDownVote voteScore={this.props.comment.voteScore} comment={this.props.comment}/>
+                    <div>{comment.body}</div>
+                    <UpAndDownVote voteScore={comment.voteScore} comment={comment}/>
                   </div>
                 </div>
               }
@@ -41,15 +43,15 @@ class Comment extends Component{
                       Score
                     </div>
                     <div>
-                      {this.props.comment.voteScore}
+                      {comment.voteScore}
                     </div>
                   </div>
                 </Avatar>
               }
             />
             <div style={{display: 'inline-flex'}}>
-              <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditComment comment={this.props.comment}/>} />
-              <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemoveComment comment={this.props.comment}/>} />
+              <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditComment comment={comment}/>} />
+              <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemoveComment comment={comment}/>} />
             </div>
           </Card>
         )}

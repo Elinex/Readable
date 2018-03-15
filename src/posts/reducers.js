@@ -1,6 +1,5 @@
 import {
   GET_POSTS,
-  // GET_POST_DETAIL,
   ADD_POST,
   REMOVE_POST,
   EDIT_POST,
@@ -38,29 +37,7 @@ export const posts = (state = [], action) => {
         }
         return post
       })
-      // return state.map(post => {
-      //   if ((action.post) && (post) && (post.id === action.post.id)) {
-      //     post.voteScore = action.post.voteScore
-      //     return post
-      //   }
-      //   return post
-      // })
     default:
       return state
   }
 }
-
-// export const post = (state = {}, action) => {
-//   switch (action.type) {
-//     case GET_POST_DETAIL:
-//       return action.post
-//     case EDIT_POST:
-//       state = action.post
-//       return state
-//     case REMOVE_POST:
-//       state = action.post
-//       return state
-//     default:
-//       return state
-//   }
-// }

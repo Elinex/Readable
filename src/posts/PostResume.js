@@ -8,27 +8,29 @@ class PostResume extends Component{
 
   render (){
 
+    const { post } = this.props
+
     return (
       <div>
         <Card style={{fontSize: 14}}>
           <CardHeader
-            title={this.props.post.author}
+            title={post.author}
             titleColor='pink'
             titleStyle={{fontWeight: 'bold'}}
             subtitle={
               <div>
                 <div>
-                  {`Posted in ${this.props.post.category} category`}
+                  {`Posted in ${post.category} category`}
                 </div>
                 <div >
-                  {dateToString(this.props.post.timestamp).slice(0, 15)}
+                  {dateToString(post.timestamp).slice(0, 15)}
                 </div>
               </div>
             }
             children={
               <div>
                 <div>
-                  <h3>{this.props.post.title}</h3>
+                  <h3>{post.title}</h3>
                 </div>
                 <div style={{
                   backgroundColor: '#FFE4E1',
@@ -36,11 +38,11 @@ class PostResume extends Component{
                   whiteSpace: 'normal'
                 }}>
                   <p>
-                    {this.props.post.body}
+                    {post.body}
                   </p>
                 </div>
-                <p>Commented {this.props.post.commentCount} times.</p>
-                <Link to={`/posts/${this.props.post.id}`}>See post details</Link>
+                <p>Commented {post.commentCount} times.</p>
+                <Link to={`/posts/${post.id}`}>See post details</Link>
               </div>
             }
             avatar={
@@ -50,7 +52,7 @@ class PostResume extends Component{
                     Score
                   </div>
                   <div>
-                    {this.props.post.voteScore}
+                    {post.voteScore}
                   </div>
                 </div>
               </Avatar>

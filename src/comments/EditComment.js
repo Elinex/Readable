@@ -26,14 +26,8 @@ class EditComment extends Component {
   }
 
   editComment = () => {
-    console.log(this.props.comment)
     dataAPI.editCommentAPI(this.props.comment.id,
       {body: this.state.body, timestamp: Date.now()}).then(res => {
-      res = {
-        ...this.props.comment,
-        body: this.state.body,
-        timestamp: Date.now()
-      }
       this.props.dispatch(editCommentAction(res))
     })
     this.setState({open: false})
@@ -54,8 +48,6 @@ class EditComment extends Component {
         onClick={this.editComment}
       />,
     ];
-
-    console.log(this.props);
 
     return (
       <div>

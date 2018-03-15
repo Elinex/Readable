@@ -3,7 +3,7 @@ import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
 import { votePostAPI, voteCommentAPI } from './dataAPI'
 import { votePostAction } from './posts/actions'
-import { voteCommentAction } from './comments/actions'
+import { editCommentAction } from './comments/actions'
 
 const style = {
   textTransform: 'capitalize',
@@ -38,16 +38,14 @@ class UpAndDownVote extends Component{
       })
     }
     if (this.props.comment) {
-      console.log(this.props.comment.id, option);
       voteCommentAPI(this.props.comment.id, option).then(res => {
         res.voteScore = this.state.voteScore
-        return this.props.dispatch(voteCommentAction(res))
+        return this.props.dispatch(editCommentAction(res))
       })
     }
   }
 
   render(){
-    console.log(this.props);
 
     return (
       <div>
