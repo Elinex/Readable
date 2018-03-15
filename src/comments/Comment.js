@@ -26,14 +26,12 @@ class Comment extends Component{
               subtitle={
                 <div>
                   <div>
-                    <b>{comment.author} </b>
+                    <i>{comment.author} </i>
                      commented on
-                    <b> {dateToString(comment.timestamp).slice(0, 15)}</b>
-                  </div>
-                  <div>
-                    <div>{comment.body}</div>
-                    <UpAndDownVote voteScore={comment.voteScore} comment={comment}/>
-                  </div>
+                    <i> {dateToString(comment.timestamp).slice(0, 15)}</i>
+                  </div><br/>
+                  <div><b>{comment.body}</b></div><br/>
+                  <UpAndDownVote voteScore={comment.voteScore} comment={comment}/>
                 </div>
               }
               avatar={

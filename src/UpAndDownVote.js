@@ -6,9 +6,8 @@ import { votePostAction } from './posts/actions'
 import { editCommentAction } from './comments/actions'
 
 const style = {
-  textTransform: 'capitalize',
-  backgroundColor: 'grey',
-  color: 'pink'
+  'padding-right': '10px',
+  'padding-left': '10px'
 }
 
 class UpAndDownVote extends Component{
@@ -49,8 +48,8 @@ class UpAndDownVote extends Component{
 
     return (
       <div>
-        <FlatButton label='upvote' labelStyle={style} onClick={this.upVote}/>
-        <FlatButton label='downvote' labelStyle={style} onClick={this.downVote}/>
+        <i className="material-icons" style={style} onClick={this.upVote}>thumb_up</i>
+        <i className="material-icons" style={style} onClick={this.downVote}>thumb_down</i>
       </div>
     )
   }
