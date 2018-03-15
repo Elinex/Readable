@@ -38,6 +38,7 @@ class UpAndDownVote extends Component{
       })
     }
     if (this.props.comment) {
+      console.log(this.props.comment.id, option);
       voteCommentAPI(this.props.comment.id, option).then(res => {
         res.voteScore = this.state.voteScore
         return this.props.dispatch(voteCommentAction(res))

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import TextField from 'material-ui/TextField'
 import * as dataAPI from '../dataAPI'
 import { editCommentAction } from './actions'
 import { connect } from 'react-redux'
@@ -11,10 +10,9 @@ const style = {
   color: 'pink'
 }
 
-class EditComment extends Component {
+class RemoveComment extends Component {
   state = {
     open: false,
-    body: this.props.comment.body
   }
 
   handleOpen = () => {
@@ -25,15 +23,8 @@ class EditComment extends Component {
     this.setState({open: false})
   }
 
-  editComment = () => {
-    console.log(this.props.comment)
-    dataAPI.editCommentAPI(this.props.comment.id,
-      {body: this.state.body, timestamp: Date.now()}).then(res => {
-      res = {
-        ...this.props.comment,
-        body: this.state.body,
-        timestamp: Date.now()
-      }
+  removeComment = () => {
+    dataAPI.removeCommentAPI(this.props.comment.id).then(res => {
       this.props.dispatch(editCommentAction(res))
     })
     this.setState({open: false})
@@ -43,37 +34,28 @@ class EditComment extends Component {
 
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="No"
         primary={true}
         onClick={this.handleClose}
       />,
       <FlatButton
-        label="Edit"
+        label="Yes"
         primary={true}
         keyboardFocused={true}
-        onClick={this.editComment}
+        onClick={this.removeComment}
       />,
-    ];
-
-    console.log(this.props);
+    ]
 
     return (
       <div>
-        <FlatButton  labelStyle={style} label="Edit" onClick={this.handleOpen} />
+        <FlatButton  labelStyle={style} label="Remove" onClick={this.handleOpen} />
         <Dialog
-          title="Edit the comment"
+          title="Are you sure to remove this comment?"
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          <TextField
-            id='body'
-            floatingLabelText="Text"
-            defaultValue={this.props.comment.body}
-            type="text"
-            onChange={(event) => this.setState({body: event.target.value})}
-          /><br />
         </Dialog>
       </div>
     )
@@ -86,4 +68,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(EditComment)
+export default connect(mapStateToProps)(RemoveComment)

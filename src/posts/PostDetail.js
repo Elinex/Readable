@@ -80,7 +80,6 @@ class PostDetail extends Component{
             <div style={{display: 'inline-flex'}}>
               <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditPost post={post}/>} />
               <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postId={post.id}/>} />
-              {/* <FlatButton label="New Comment" labelStyle={labelStyle} containerElement={<NewComment parentId={post.id}/>} /> */}
             </div>
             <CardHeader
               subtitle='Post comments'

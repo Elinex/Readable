@@ -87,11 +87,39 @@ export const votePostAPI = (id, option) =>
     // body: JSON.stringify(post)
   }).then(res => res.json())
 
+
 // | `POST /comments/:id` | Used for voting on a comment. |
 // **option** - [String]: Either `"upVote"` or `"downVote"`.  |
 export const voteCommentAPI = (id, option) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: headers,
-    // body: JSON.stringify(id)
+    body: {option}
+  }).then(res => res.json())
+
+
+// | `PUT /comments/:id` |
+// | Edit the details of an existing comment. |
+// | **timestamp** - timestamp. Get this however you want. <br>
+// **body** - [String] |
+export const editCommentAPI = (commentId, params) =>
+  fetch(`${api}/comments/${commentId}`, {
+    method: 'PUT',
+    headers: headers,
+    body: JSON.stringify(params)
+  }).then(res => {
+      var jsonres = res.json()
+      console.log(jsonres)
+      return jsonres
+  })
+
+
+// | `DELETE /comments/:id` |
+// | Sets a comment's deleted flag to `true`. |
+// | No params |
+export const removeCommentAPI = (id) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'DELETE',
+    headers: headers,
+    // body: JSON.stringify(comment)
   }).then(res => res.json())
