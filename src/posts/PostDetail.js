@@ -12,6 +12,7 @@ import RemovePost from './RemovePost'
 import EditPost from './EditPost'
 import { getCommentsAction } from '../comments/actions'
 import sortBy from 'sort-by'
+import CategoriesMenu from '../categories/CategoriesMenu'
 
 const labelStyle = {
   textTransform: 'capitalize',
@@ -36,6 +37,7 @@ class PostDetail extends Component{
 
     return (
       <div>
+        <CategoriesMenu />
         {(post.deleted === false) && (
           <Card style={{fontSize: 14}}>
             <CardHeader
