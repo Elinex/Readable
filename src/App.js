@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
 import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
+import sortBy from 'sort-by'
 
 export class App extends Component {
 
@@ -26,9 +27,12 @@ export class App extends Component {
           </header>
 
           <Route exact path='/'
-            render={() => (
-              <MainView posts={this.props.posts}/>
-            )}
+            render={() => {
+              this.props.posts.sort(sortBy('-voteScore'))
+              return (
+                <MainView posts={this.props.posts}/>
+              )
+            }}
           />
 
           <Route exact path='/posts/:id'
@@ -49,10 +53,13 @@ export class App extends Component {
           />
 
           <Route path='/:category/posts'
-            render={({match}) => (
-              <MainView posts={this.props.posts.filter(post =>
-                (post.category === match.params.category))}/>
-            )}
+            render={({match}) => {
+              this.props.posts.sort(sortBy('-voteScore'))
+              return (
+                <MainView posts={this.props.posts.filter(post =>
+                  (post.category === match.params.category))}/>
+              )
+            }}
           />
         </div>
       </BrowserRouter>

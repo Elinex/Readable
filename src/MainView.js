@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 import FlatButton from 'material-ui/FlatButton'
 import AddPost from './posts/AddPost'
+import sortBy from 'sort-by'
 
 export class MainView extends Component {
   state = {
@@ -15,10 +16,12 @@ export class MainView extends Component {
     valueCategory: 'Posts by category'
   }
 
+
   sortPosts = (option, value) => {
     this.setState({
       valueSortPosts: value
     })
+    this.props.posts.sort(sortBy(option))
   }
 
   changeCategory = (event, index, value) => this.setState({valueCategory: value})
