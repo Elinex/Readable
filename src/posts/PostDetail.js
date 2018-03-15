@@ -11,6 +11,7 @@ import AddComment from '../comments/AddComment'
 import RemovePost from './RemovePost'
 import EditPost from './EditPost'
 import { getCommentsAction } from '../comments/actions'
+import sortBy from 'sort-by'
 
 const labelStyle = {
   textTransform: 'capitalize',
@@ -89,8 +90,10 @@ class PostDetail extends Component{
             <CardText expandable={true}>
               <div>
                 {(this.props.comments[this.props.postId]) && (
-                  this.props.comments[this.props.postId].map(comment => {
-                    return <Comment key={comment.id} comment={comment} />
+                  (this.props.comments[this.props.postId])
+                    .sort(sortBy('-voteScore'))
+                    .map(comment => {
+                      return <Comment key={comment.id} comment={comment} />
                   })
                 )}
                 <FlatButton label="Add comment" labelStyle={labelStyle} containerElement={<AddComment parentId={post.id}/>} />
