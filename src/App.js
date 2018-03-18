@@ -71,11 +71,6 @@ function mapStateToProps(state){
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getCategories: (categoriesList) => dispatch(getCategories(categoriesList)),
-    getPosts: (postsList) => dispatch(getPosts(postsList)),
-  }
-}
+const mapDispatchToProps = { getCategories, getPosts }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
