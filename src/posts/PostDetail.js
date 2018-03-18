@@ -21,7 +21,7 @@ const labelStyle = {
 
 class PostDetail extends Component{
 
-  componentWillMount(){
+  componentDidMount(){
     dataAPI.getCommentsAPI(this.props.postId)
       .then(res =>
         this.props.dispatch(getCommentsAction(this.props.postId, res))
