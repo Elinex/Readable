@@ -9,9 +9,9 @@ import { addPostAction } from './actions'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-const style = {
-  backgroundColor: 'rgb(255, 228, 225)'
-}
+// const style = {
+//   backgroundColor: '#CCFFFF'
+// }
 
 class AddPost extends Component {
   state = {
@@ -78,9 +78,9 @@ class AddPost extends Component {
 
     return (
       <div>
-        <FlatButton  labelStyle={style} label="Add new post" onClick={this.handleOpen} />
+        <FlatButton label="Add post" onClick={this.handleOpen} />
         <Dialog
-          title="Edit the post"
+          title="Add post"
           actions={actions}
           modal={false}
           open={this.state.open}

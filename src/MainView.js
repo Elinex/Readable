@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import PostResume from './posts/PostResume'
+import Post from './posts/Post'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
@@ -41,7 +41,7 @@ class MainView extends Component {
 
         </Toolbar>
         {posts.map(post => {
-          return <PostResume key={post.id} post={post}/>
+          return <Post key={post.id} post={post}/>
         })}
         <FlatButton label="Add new post" containerElement={<AddPost />} />
       </div>
