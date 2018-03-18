@@ -5,8 +5,8 @@ import { votePostAction } from './posts/actions'
 import { editCommentAction } from './comments/actions'
 
 const style = {
-  'padding-right': '10px',
-  'padding-left': '10px'
+  'paddingRight': '10px',
+  'paddingLeft': '10px'
 }
 
 class UpAndDownVote extends Component{

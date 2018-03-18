@@ -35,7 +35,7 @@ export class App extends Component {
             }}
           />
 
-          <Route exact path='/posts/:id'
+          <Route exact path='/:category/:id'
             render={({match}) => (
               // <div>{JSON.stringify(match.params.id)}</div>
               <PostDetail
@@ -52,7 +52,7 @@ export class App extends Component {
             )}
           />
 
-          <Route path='/:category'
+          <Route exact path='/:category'
             render={({match}) => {
               this.props.posts.sort(sortBy('-voteScore'))
               return (

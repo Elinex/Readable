@@ -28,6 +28,8 @@ class MainView extends Component {
     return (
       <div>
         <Toolbar>
+          <CategoriesMenu />
+
           <ToolbarGroup>
             <DropDownMenu value={this.state.valueSortPosts} style={{fontWeight: 'bold' }}>
               <MenuItem value={'Sort posts by'} primaryText='Sort posts by' disabled={true}/>
@@ -36,8 +38,6 @@ class MainView extends Component {
               <MenuItem value={'Highest score'} primaryText='Highest score' onClick={() => this.sortPosts('-voteScore', 'Highest score')}/>
             </DropDownMenu>
           </ToolbarGroup>
-
-          <CategoriesMenu />
 
         </Toolbar>
         {posts.map(post => {

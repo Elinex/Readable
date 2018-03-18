@@ -42,7 +42,7 @@ class PostResume extends Component{
                   </p>
                 </div>
                 <p>Commented {post.commentCount} times.</p>
-                <Link to={`/posts/${post.id}`}>See post details</Link>
+                <Link to={`/${post.category}/${post.id}`}>See post details</Link>
               </div>
             }
             avatar={
