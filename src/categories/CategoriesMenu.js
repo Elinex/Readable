@@ -30,7 +30,7 @@ class CategoriesMenu extends Component{
                 <MenuItem
                   key={category}
                   value={category}
-                  primaryText={<Link to={`/${category}/posts`}>{category}</Link>}
+                  primaryText={<Link to={`/${category}`}>{category}</Link>}
                 />
               )
             })}

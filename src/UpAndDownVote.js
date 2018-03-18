@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import FlatButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
 import { votePostAPI, voteCommentAPI } from './dataAPI'
 import { votePostAction } from './posts/actions'

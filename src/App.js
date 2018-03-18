@@ -52,7 +52,7 @@ export class App extends Component {
             )}
           />
 
-          <Route path='/:category/posts'
+          <Route path='/:category'
             render={({match}) => {
               this.props.posts.sort(sortBy('-voteScore'))
               return (
