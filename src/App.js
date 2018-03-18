@@ -23,7 +23,7 @@ export class App extends Component {
       <BrowserRouter>
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">Readout</h1>
+            <h1 className="App-title">Readable</h1>
           </header>
 
           <Route exact path='/'
@@ -53,13 +53,10 @@ export class App extends Component {
           />
 
           <Route exact path='/:category'
-            render={({match}) => {
-              this.props.posts.sort(sortBy('-voteScore'))
-              return (
-                <MainView posts={this.props.posts.filter(post =>
-                  (post.category === match.params.category))}/>
-              )
-            }}
+            render={({match}) => (
+              <MainView posts={this.props.posts.filter(post =>
+                (post.category === match.params.category))}/>
+            )}
           />
         </div>
       </BrowserRouter>
@@ -70,7 +67,7 @@ export class App extends Component {
 function mapStateToProps(state){
   return {
     ...state,
-    posts: state.posts,
+    posts: state.posts.sort(sortBy('-voteScore'))
   }
 }
 
