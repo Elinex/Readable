@@ -27,30 +27,21 @@ class Post extends Component{
   }
 
   componentDidMount(){
-    dataAPI.getCommentsAPI(this.props.post.id)
+    dataAPI.getCommentsAPI(this.props.postId)
       .then(res =>
-        // console.log(res)
-        this.props.dispatch(getCommentsAction(this.props.post.id, res))
+        this.props.dispatch(getCommentsAction(this.props.postId, res))
       )
-    console.log(this.props.comments);
-  }
-
-  timesCommented = () => {
-    if (this.props.post.commentCount === 0){
-      return 'No comments'
-    } else if (this.props.post.commentCount === 1){
-      return '1 comment'
-    }
-    else {
-      return `${this.props.post.commentCount} comments`
-    }
   }
 
   render(){
 
-    const { post, comments } = this.props
+    const { comments } = this.props
 
-    console.log(comments);
+    const post = this.props.posts
+      .filter(post => post.id === this.props.postId)
+      .reduce((acc, cur) => {
+        return cur
+      }, {})
 
     return (
       <Card style={{backgroundColor: 'snow'}}>
@@ -88,7 +79,17 @@ class Post extends Component{
               </Avatar>
               <div><b>{post.body}</b></div><br/>
               <div>
-                <p style={{fontSize: '12px', color: 'rgba(0, 0, 0, 0.54)'}}>{this.timesCommented()}</p>
+                <div style={{fontSize: '12px', color: 'rgba(0, 0, 0, 0.54)'}}>
+                  {(post.commentCount === 0) && (
+                    <p>No comments</p>
+                  )}
+                  {(post.commentCount === 1) && (
+                    <p>1 comment</p>
+                  )}
+                  {(post.commentCount > 1) && (
+                    <p>{post.commentCount} comments</p>
+                  )}
+                </div>
                 <UpAndDownVote voteScore={post.voteScore} post={post}/>
               </div>
               <div style={{display: 'inline-flex'}}>
@@ -140,9 +141,7 @@ class Post extends Component{
 
 function mapStateToProps(state){
   return {
-    ...state,
-    posts: state.posts,
-    comments: state.comments
+    ...state
   }
 }
 

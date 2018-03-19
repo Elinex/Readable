@@ -48,7 +48,7 @@ export class App extends Component {
             }}
           />
 
-          <Route exact path='/:category/:id'
+          {/* <Route exact path='/:category/:id'
           // <div>{JSON.stringify(match.params.id)}</div>
             render={({match}) => {
               const post = this.props.posts
@@ -57,13 +57,26 @@ export class App extends Component {
                   return cur
                 }, {})
 
+              console.log(post)
+
               return (
                 <div>
                   <CategoriesMenu />
-                  <Post post={post} />
+                  <Post post={post}/>
                 </div>
               )
             }}
+          /> */}
+
+          <Route exact path='/:category/:id'
+          // <div>{JSON.stringify(match.params.id)}</div>
+            render={({match}) => (
+                <div>
+                  <CategoriesMenu />
+                  <Post postId={match.params.id}/>
+                </div>
+              )
+            }
           />
 
           <Route exact path='/editPost/:id'
