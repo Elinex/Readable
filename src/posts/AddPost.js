@@ -9,10 +9,6 @@ import { addPostAction } from './actions'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-// const style = {
-//   backgroundColor: '#CCFFFF'
-// }
-
 class AddPost extends Component {
   state = {
     open: false,

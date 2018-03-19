@@ -7,8 +7,8 @@ import { editCommentAction } from './actions'
 import { connect } from 'react-redux'
 
 const style = {
-  textTransform: 'capitalize',
-  color: 'pink'
+  fontSize: '12px',
+  color: 'rgba(0, 0, 0, 0.54)'
 }
 
 class EditComment extends Component {

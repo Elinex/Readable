@@ -8,10 +8,10 @@ import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
 import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
-import { getCommentsAction } from './comments/actions'
 import sortBy from 'sort-by'
 import CategoriesMenu from './categories/CategoriesMenu'
 import * as dataAPI from './dataAPI'
+import { getCommentsAction } from './comments/actions'
 
 export class App extends Component {
 
@@ -20,14 +20,15 @@ export class App extends Component {
     this.props.getPosts()
   }
 
-  // componentDidMount(){
-  //   this.props.posts.map(post =>
-  //     dataAPI.getCommentsAPI(post.id)
-  //       .then(res =>
-  //         this.props.dispatch(getCommentsAction(post.id, res))
-  //       )
-  //   )
-  // }
+  componentDidMount(){
+    this.props.posts.map(post => (
+      dataAPI.getCommentsAPI(post.id)
+        .then(res =>
+          this.props.dispatch(getCommentsAction(post.id, res))
+        )
+    ))
+    console.log(this.props.comments);
+  }
 
   render() {
 
@@ -60,7 +61,6 @@ export class App extends Component {
                 <div>
                   <CategoriesMenu />
                   <Post post={post} />
-                  {/* <PostDetail post={post}/> */}
                 </div>
               )
             }}
@@ -89,7 +89,8 @@ export class App extends Component {
 function mapStateToProps(state, ownProps){
   return {
     ...state,
-    posts: state.posts.sort(sortBy('-voteScore'))
+    posts: state.posts.sort(sortBy('-voteScore')),
+    // comments: state.comments
   }
 }
 
