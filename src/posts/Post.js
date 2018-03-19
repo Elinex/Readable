@@ -26,6 +26,15 @@ class Post extends Component{
     postDetails: 'false'
   }
 
+  componentDidMount(){
+    dataAPI.getCommentsAPI(this.props.post.id)
+      .then(res =>
+        // console.log(res)
+        this.props.dispatch(getCommentsAction(this.props.post.id, res))
+      )
+    console.log(this.props.comments);
+  }
+
   timesCommented = () => {
     if (this.props.post.commentCount === 0){
       return 'No comments'
@@ -39,9 +48,9 @@ class Post extends Component{
 
   render(){
 
-    const { post } = this.props
+    const { post, comments } = this.props
 
-    console.log(this.props.comments);
+    console.log(comments);
 
     return (
       <Card style={{backgroundColor: 'snow'}}>
@@ -109,17 +118,17 @@ class Post extends Component{
           <div>
             <CardHeader
               style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
-              // subtitle={
-              //   <div>
-              //     {(comments[post.id].length > 0) && (
-              //       comments[post.id].sort(sortBy('-voteScore'))
-              //         .map(comment => {
-              //           return <Comment key={comment.id} comment={comment} />
-              //       })
-              //     )}
-              //     <AddComment parentId={post.id} />
-              //   </div>
-              // }
+              subtitle={
+                <div>
+                  {(comments[post.id].length > 0) && (
+                    comments[post.id].sort(sortBy('-voteScore'))
+                      .map(comment => {
+                        return <Comment key={comment.id} comment={comment} />
+                    })
+                  )}
+                  <AddComment parentId={post.id} />
+                </div>
+              }
               textStyle={{display: 'contents'}}
             />
           </div>

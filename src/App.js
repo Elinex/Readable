@@ -20,15 +20,15 @@ export class App extends Component {
     this.props.getPosts()
   }
 
-  componentDidMount(){
-    this.props.posts.map(post => (
-      dataAPI.getCommentsAPI(post.id)
-        .then(res =>
-          this.props.dispatch(getCommentsAction(post.id, res))
-        )
-    ))
-    console.log(this.props.comments);
-  }
+  // componentDidMount(){
+  //   this.props.posts.map(post => (
+  //     dataAPI.getCommentsAPI(post.id)
+  //       .then(res =>
+  //         this.props.dispatch(getCommentsAction(post.id, res))
+  //       )
+  //   ))
+  //   console.log(this.props.comments);
+  // }
 
   render() {
 
