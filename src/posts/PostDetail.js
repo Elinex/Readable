@@ -14,105 +14,46 @@ import { getCommentsAction } from '../comments/actions'
 import sortBy from 'sort-by'
 import CategoriesMenu from '../categories/CategoriesMenu'
 
-const labelStyle = {
-  textTransform: 'capitalize',
-  color: 'pink'
-}
-
 class PostDetail extends Component{
 
   componentDidMount(){
-    dataAPI.getCommentsAPI(this.props.postId)
+    dataAPI.getCommentsAPI(this.props.post.id)
       .then(res =>
-        this.props.dispatch(getCommentsAction(this.props.postId, res))
+        console.log(res)
+        // this.props.dispatch(getCommentsAction(this.props.post.id, res))
       )
   }
 
   render (){
 
-    const post = this.props.posts.filter(post => post.id === this.props.postId)
-      .reduce((acc, cur) => {
-        return cur
-      }, {})
+    const { post } = this.props
 
     return (
-      <div>
-        <CategoriesMenu />
-        {(post.deleted === false) && (
-          <Card style={{fontSize: 14}}>
-            <CardHeader
-              title={post.author}
-              titleColor='pink'
-              titleStyle={{fontWeight: 'bold'}}
-              subtitle={
-                <div>
-                  <div>
-                    {`Posted in ${post.category} category`}
-                  </div>
-                  <div >
-                    {dateToString(post.timestamp).slice(0, 15)}
-                  </div>
-                </div>
-              }
-              children={
-                <div>
-                  <div>
-                    <h3>{post.title}</h3>
-                  </div>
-                  <div style={{backgroundColor: '#FFE4E1', 'padding': '15px 5px', whiteSpace: 'normal'}}>
-                    <p>
-                      {post.body}
-                    </p>
-                    <UpAndDownVote voteScore={post.voteScore} post={post}/>
-                  </div>
-                </div>
+      <Card style={{fontSize: 14}}>
 
-              }
-              avatar={
-                <Avatar backgroundColor={'rgb(232, 232, 232)'} color='black'>
-                  <div>
-                    <div style={{fontSize: 8}}>
-                      Score
-                    </div>
-                    <div>
-                      {post.voteScore}
-                    </div>
-                  </div>
-                </Avatar>}
-            />
-            <div style={{display: 'inline-flex'}}>
-              <FlatButton label="Edit" labelStyle={labelStyle} containerElement={<EditPost post={post}/>} />
-              <FlatButton label="Remove" labelStyle={labelStyle} containerElement={<RemovePost postId={post.id}/>} />
-            </div>
-            <CardHeader
-              subtitle='Post comments'
-              actAsExpander={true}
-              showExpandableButton={true}
-            />
-            <CardText expandable={true}>
-              <div>
-                {(this.props.comments[this.props.postId]) && (
-                  (this.props.comments[this.props.postId])
-                    .sort(sortBy('-voteScore'))
-                    .map(comment => {
-                      return <Comment key={comment.id} comment={comment} />
-                  })
-                )}
-                <FlatButton label="Add comment" labelStyle={labelStyle} containerElement={<AddComment parentId={post.id}/>} />
-              </div>
-            </CardText>
-          </Card>
-        )}
-
-        {(post.deleted === true) && (
-          <div>Post deleted</div>
-        )}
-      </div>
+        <CardHeader
+          subtitle='Post comments'
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
+        <CardText expandable={true}>
+          <div>
+            {(this.props.comments[post.id]) && (
+              (this.props.comments[post.id])
+                .sort(sortBy('-voteScore'))
+                .map(comment => {
+                  return <Comment key={comment.id} comment={comment} />
+              })
+            )}
+            <FlatButton label="Add comment" containerElement={<AddComment parentId={post.id}/>} />
+          </div>
+        </CardText>
+      </Card>
     )
   }
 }
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state){
   return {
     ...state
   }

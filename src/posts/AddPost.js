@@ -77,8 +77,8 @@ class AddPost extends Component {
     ]
 
     return (
-      <div>
-        <FlatButton label="Add post" onClick={this.handleOpen} />
+      <div style={{backgroundColor: 'powderblue', margin: '0px 10px 0px 10px'}}>
+        <FlatButton label="Add post" labelStyle={{fontWeight: 'bold'}} onClick={this.handleOpen} />
         <Dialog
           title="Add post"
           actions={actions}

@@ -35,7 +35,7 @@ class Comment extends Component{
                 </div>
               }
               avatar={
-                <Avatar backgroundColor={'#FFE4E1'} color='black'>
+                <Avatar backgroundColor={'powderblue'} color='black'>
                   <div>
                     <div style={{fontSize: 8}}>
                       Score
