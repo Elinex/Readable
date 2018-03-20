@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import EditPost from './posts/EditPost'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Post from './posts/Post'
 import { BrowserRouter } from 'react-router-dom'
 import MainView from './MainView'
@@ -10,8 +10,6 @@ import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
 import sortBy from 'sort-by'
 import CategoriesMenu from './categories/CategoriesMenu'
-import * as dataAPI from './dataAPI'
-import { getCommentsAction } from './comments/actions'
 
 export class App extends Component {
 
@@ -19,16 +17,6 @@ export class App extends Component {
     this.props.getCategories()
     this.props.getPosts()
   }
-
-  // componentDidMount(){
-  //   this.props.posts.map(post => (
-  //     dataAPI.getCommentsAPI(post.id)
-  //       .then(res =>
-  //         this.props.dispatch(getCommentsAction(post.id, res))
-  //       )
-  //   ))
-  //   console.log(this.props.comments);
-  // }
 
   render() {
 
@@ -38,61 +26,45 @@ export class App extends Component {
           <header className="App-header">
             <h1 className="App-title">Readable</h1>
           </header>
-
-          <Route exact path='/'
-            render={() => {
-              this.props.posts.sort(sortBy('-voteScore'))
-              return (
-                <MainView posts={this.props.posts}/>
-              )
-            }}
-          />
-
-          {/* <Route exact path='/:category/:id'
-          // <div>{JSON.stringify(match.params.id)}</div>
-            render={({match}) => {
-              const post = this.props.posts
-                .filter(post => post.id === match.params.id)
-                .reduce((acc, cur) => {
-                  return cur
-                }, {})
-
-              console.log(post)
-
-              return (
-                <div>
-                  <CategoriesMenu />
-                  <Post post={post}/>
-                </div>
-              )
-            }}
-          /> */}
-
-          <Route exact path='/:category/:id'
-          // <div>{JSON.stringify(match.params.id)}</div>
-            render={({match}) => (
-                <div>
-                  <CategoriesMenu />
-                  <Post postId={match.params.id}/>
-                </div>
-              )
-            }
-          />
-
-          <Route exact path='/editPost/:id'
-            render={({match}) => (
-              <EditPost
-                postID={match.params.id}
-              />
-            )}
-          />
-
-          <Route exact path='/:category'
-            render={({match}) => (
-              <MainView posts={this.props.posts.filter(post =>
-                (post.category === match.params.category))}/>
-            )}
-          />
+          <Switch>
+            <Route exact path='/'
+              render={() => {
+                this.props.posts.sort(sortBy('-voteScore'))
+                return (
+                  <MainView posts={this.props.posts}/>
+                )
+              }}
+            />
+            <Route path='/:category/:id'
+            // <div>{JSON.stringify(match.params.id)}</div>
+              render={({match}) => (
+                  <div>
+                    <CategoriesMenu />
+                    <Post post={
+                      this.props.posts
+                        .filter(post => post.id === match.params.id)
+                        .reduce((acc, cur) => {
+                          return cur
+                        }, {})
+                    }/>
+                  </div>
+                )
+              }
+            />
+            <Route path='/editPost/:id'
+              render={({match}) => (
+                <EditPost
+                  postID={match.params.id}
+                />
+              )}
+            />
+            <Route path='/:category'
+              render={({match}) => (
+                <MainView posts={this.props.posts.filter(post =>
+                  (post.category === match.params.category))}/>
+              )}
+            />
+          </Switch>
         </div>
       </BrowserRouter>
     )
@@ -102,8 +74,7 @@ export class App extends Component {
 function mapStateToProps(state, ownProps){
   return {
     ...state,
-    posts: state.posts.sort(sortBy('-voteScore')),
-    // comments: state.comments
+    posts: state.posts.sort(sortBy('-voteScore'))
   }
 }
 
