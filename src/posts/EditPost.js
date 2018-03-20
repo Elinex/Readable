@@ -26,6 +26,15 @@ class EditPost extends Component {
     this.setState({open: false})
   }
 
+  checkFields = () => {
+    if ((this.state.title === '') || (this.state.body === '')){
+      alert('Fill all the fields')
+    } else {
+      this.editPost()
+      alert('Post edited with success')
+    }
+  }
+
   editPost = () => {
     const editedPost = {
       body: this.state.body,
@@ -49,8 +58,8 @@ class EditPost extends Component {
         label="Edit"
         primary={true}
         keyboardFocused={true}
-        onClick={this.editPost}
-      />,
+        onClick={this.checkFields}
+      />
     ]
 
     return (
@@ -68,6 +77,7 @@ class EditPost extends Component {
             floatingLabelText="Title"
             defaultValue={this.props.post.title}
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
@@ -75,6 +85,7 @@ class EditPost extends Component {
             floatingLabelText="Text"
             defaultValue={this.props.post.body}
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
         </Dialog>

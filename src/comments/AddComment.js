@@ -22,6 +22,15 @@ class AddComment extends Component {
     this.setState({open: false})
   }
 
+  checkFields = () => {
+    if ((this.state.author === '') || (this.state.body === '')){
+      alert('Fill all the fields')
+    } else {
+      this.addComment()
+      alert('Comment created with success')
+    }
+  }
+
   addComment = () => {
     const newComment = {
       id: guid(),
@@ -48,9 +57,9 @@ class AddComment extends Component {
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onClick={this.addComment}
-      />,
-    ];
+        onClick={this.checkFields}
+      />
+    ]
 
     return (
       <div style={{backgroundColor: 'rgb(232, 232, 232)', display: 'center'}}>
@@ -67,6 +76,7 @@ class AddComment extends Component {
             floatingLabelText="Author"
             defaultValue={this.state.author}
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({author: event.target.value})}
           /><br />
           <TextField
@@ -74,6 +84,7 @@ class AddComment extends Component {
             floatingLabelText="Text"
             defaultValue={this.state.body}
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
         </Dialog>

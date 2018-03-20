@@ -26,6 +26,18 @@ class AddPost extends Component {
     this.setState({open: false})
   }
 
+  checkFields = () => {
+    if ((Array.isArray(this.state.value)) ||
+    (this.state.title === '') ||
+    (this.state.author === '') ||
+    (this.state.body === '')){
+      alert('Fill all the fields')
+    } else {
+      this.addPost()
+      alert('Post created with success')
+    }
+  }
+
   addPost = () => {
     const newPost = {
       id: guid(),
@@ -39,7 +51,6 @@ class AddPost extends Component {
       this.props.dispatch(addPostAction(res))
     })
     this.setState({open: false})
-    alert('Post created with success')
   }
 
   menuItems(value) {
@@ -68,8 +79,8 @@ class AddPost extends Component {
         label="Add post"
         primary={true}
         keyboardFocused={true}
-        onClick={this.addPost}
-      />,
+        onClick={this.checkFields}
+      />
     ]
 
     return (
@@ -86,22 +97,26 @@ class AddPost extends Component {
             id='title'
             floatingLabelText="Title"
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
             id='author'
             floatingLabelText="Author"
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({author: event.target.value})}
           /><br />
           <TextField
             id='body'
             floatingLabelText="Text"
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
           <SelectField
             hintText="Post category"
+            errorText="This field is required"
             value={this.state.value}
             onChange={this.handleChange}
           >{this.menuItems(this.state.value)}</SelectField><br />

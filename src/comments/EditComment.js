@@ -25,6 +25,15 @@ class EditComment extends Component {
     this.setState({open: false})
   }
 
+  checkFields = () => {
+    if (this.state.body === ''){
+      alert('Fill all the fields')
+    } else {
+      this.editComment()
+      alert('Comment edited with success')
+    }
+  }
+
   editComment = () => {
     dataAPI.editCommentAPI(this.props.comment.id,
       {body: this.state.body, timestamp: Date.now()}).then(res => {
@@ -45,9 +54,9 @@ class EditComment extends Component {
         label="Edit"
         primary={true}
         keyboardFocused={true}
-        onClick={this.editComment}
-      />,
-    ];
+        onClick={this.checkFields}
+      />
+    ]
 
     return (
       <div>
@@ -64,6 +73,7 @@ class EditComment extends Component {
             floatingLabelText="Text"
             defaultValue={this.props.comment.body}
             type="text"
+            errorText="This field is required"
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
         </Dialog>
