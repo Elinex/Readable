@@ -10,9 +10,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as dataAPI from '../dataAPI'
 import { getCommentsAction } from '../comments/actions'
-import sortBy from 'sort-by'
-import Comment from '../comments/Comment'
-import AddComment from '../comments/AddComment'
 
 const style = {
   fontSize: '12px',

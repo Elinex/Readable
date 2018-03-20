@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import './App.css'
 import EditPost from './posts/EditPost'
-import { connect } from 'react-redux'
-import { Switch, Route } from 'react-router-dom'
 import Post from './posts/Post'
-import { BrowserRouter } from 'react-router-dom'
-import MainView from './MainView'
-import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
+import AddPost from './posts/AddPost'
+import { connect } from 'react-redux'
+import { Switch, Route, Link, BrowserRouter } from 'react-router-dom'
+import SortPostsBy from './SortPostsBy'
 import sortBy from 'sort-by'
+import { getCategories } from './categories/actions'
 import CategoriesMenu from './categories/CategoriesMenu'
 import AddComment from './comments/AddComment'
-import * as dataAPI from './dataAPI'
-import { getCommentsAction } from './comments/actions'
 import Comment from './comments/Comment'
 import {CardHeader} from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
+import { Toolbar } from 'material-ui/Toolbar'
 
 export class App extends Component {
 
@@ -25,6 +25,8 @@ export class App extends Component {
 
   render() {
 
+    const { posts } = this.props
+
     return (
       <BrowserRouter>
         <div className="App">
@@ -32,39 +34,54 @@ export class App extends Component {
             <h1 className="App-title">Readable</h1>
           </header>
           <Switch>
+
             <Route exact path='/'
-              render={() => {
-                this.props.posts.sort(sortBy('-voteScore'))
-                return (
-                  <MainView posts={this.props.posts}/>
-                )
-              }}
+              render={() => (
+                <div>
+                  <Toolbar>
+                    <CategoriesMenu />
+                    <SortPostsBy />
+                  </Toolbar>
+                  {posts.map(post =>
+                    <Post key={post.id} post ={post} />
+                  )}
+                  <FlatButton label="Add new post" containerElement={<AddPost />} />
+                </div>
+              )}
             />
 
             <Route path='/:category/:id'
               render={({match}) => {
 
-                const post = this.props.posts
+                const post = posts
                   .filter(post => post.id === match.params.id)
                   .reduce((acc, cur) => {
                     return cur
                   }, {})
 
-                console.log(this.props.comments)
-
                 return (
                   <div>
-                    <CategoriesMenu />
-                    <Post post={post}/>
-                    {this.props.comments[post.id].map(comment =>
-                      <CardHeader
-                        key={comment.id}
-                        style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
-                        subtitle={<Comment comment={comment} />}
-                        textStyle={{display: 'contents'}}
-                      />
+                    {(post.deleted === false) && (
+                      <div>
+                        <CategoriesMenu />
+                        <Post post={post}/>
+                        {this.props.comments[post.id].map(comment =>
+                          <CardHeader
+                            key={comment.id}
+                            style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
+                            subtitle={<Comment comment={comment} />}
+                            textStyle={{display: 'contents'}}
+                          />
+                        )}
+                        <AddComment parentId={post.id} />
+                      </div>
                     )}
-                    <AddComment parentId={post.id} />
+                    {((post.deleted === true) || (post.id === undefined)) && (
+                      <div>
+                        <h2>Page not found</h2>
+                        <center><Link to="/">Return to Home Page</Link></center>
+                      </div>
+                    )}
                   </div>
                 )
               }}
@@ -80,10 +97,20 @@ export class App extends Component {
 
             <Route path='/:category'
               render={({match}) => (
-                <MainView posts={this.props.posts.filter(post =>
-                  (post.category === match.params.category))}/>
+                <div>
+                  <Toolbar>
+                    <CategoriesMenu />
+                    <SortPostsBy />
+                  </Toolbar>
+                  {posts
+                    .filter(post => (post.category === match.params.category))
+                    .map(post => <Post key={post.id} post ={post} />)
+                  }
+                  <FlatButton label="Add new post" containerElement={<AddPost />} />
+                </div>
               )}
             />
+
           </Switch>
         </div>
       </BrowserRouter>

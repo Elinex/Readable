@@ -48,6 +48,7 @@ export const getPostsAPI = () =>
 export const getPostDetailAPI = (postId) =>
   fetch(`${api}/posts/${postId}`, { headers })
     .then(res => res.json())
+    .catch(res => console.log(res))
 
 
 // GET /posts/:id/comments
