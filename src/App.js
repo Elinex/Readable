@@ -10,6 +10,11 @@ import { getCategories } from './categories/actions'
 import { getPosts } from './posts/actions'
 import sortBy from 'sort-by'
 import CategoriesMenu from './categories/CategoriesMenu'
+import AddComment from './comments/AddComment'
+import * as dataAPI from './dataAPI'
+import { getCommentsAction } from './comments/actions'
+import Comment from './comments/Comment'
+import {CardHeader} from 'material-ui/Card'
 
 export class App extends Component {
 
@@ -35,22 +40,36 @@ export class App extends Component {
                 )
               }}
             />
+
             <Route path='/:category/:id'
-            // <div>{JSON.stringify(match.params.id)}</div>
-              render={({match}) => (
+              render={({match}) => {
+
+                const post = this.props.posts
+                  .filter(post => post.id === match.params.id)
+                  .reduce((acc, cur) => {
+                    return cur
+                  }, {})
+
+                console.log(this.props.comments)
+
+                return (
                   <div>
                     <CategoriesMenu />
-                    <Post post={
-                      this.props.posts
-                        .filter(post => post.id === match.params.id)
-                        .reduce((acc, cur) => {
-                          return cur
-                        }, {})
-                    }/>
+                    <Post post={post}/>
+                    {this.props.comments[post.id].map(comment =>
+                      <CardHeader
+                        key={comment.id}
+                        style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
+                        subtitle={<Comment comment={comment} />}
+                        textStyle={{display: 'contents'}}
+                      />
+                    )}
+                    <AddComment parentId={post.id} />
                   </div>
                 )
-              }
+              }}
             />
+
             <Route path='/editPost/:id'
               render={({match}) => (
                 <EditPost
@@ -58,6 +77,7 @@ export class App extends Component {
                 />
               )}
             />
+
             <Route path='/:category'
               render={({match}) => (
                 <MainView posts={this.props.posts.filter(post =>
@@ -74,7 +94,8 @@ export class App extends Component {
 function mapStateToProps(state, ownProps){
   return {
     ...state,
-    posts: state.posts.sort(sortBy('-voteScore'))
+    posts: state.posts.sort(sortBy('-voteScore')),
+    comments: state.comments
   }
 }
 

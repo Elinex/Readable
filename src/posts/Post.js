@@ -22,26 +22,16 @@ const style = {
 
 class Post extends Component{
 
-  state = {
-    postDetails: 'false'
-  }
-
   componentDidMount(){
-    dataAPI.getCommentsAPI(this.props.postId)
+    dataAPI.getCommentsAPI(this.props.post.id)
       .then(res =>
-        this.props.dispatch(getCommentsAction(this.props.postId, res))
+        this.props.dispatch(getCommentsAction(this.props.post.id, res))
       )
   }
 
   render(){
 
-    const { comments } = this.props
-
-    const post = this.props.posts
-      .filter(post => post.id === this.props.postId)
-      .reduce((acc, cur) => {
-        return cur
-      }, {})
+    const { post } = this.props
 
     return (
       <Card style={{backgroundColor: 'snow'}}>
@@ -100,14 +90,11 @@ class Post extends Component{
                   <RemovePost postId={post.id}/>}
                 />
                 <FlatButton
-                  label="See post details"
+                  label='See details'
                   labelStyle={style}
                   containerElement={
-                    <Link to={`/${post.category}/${post.id}`}>
-                      See post details
-                    </Link>
+                    <Link to={`/${post.category}/${post.id}`}/>
                   }
-                  onClick={() => this.setState({postDetails: 'open'})}
                 />
               </div>
             </div>
@@ -115,25 +102,21 @@ class Post extends Component{
           textStyle={{display: 'contents'}}
         />
 
-        {(this.state.postDetails === 'open') && (
-          <div>
-            <CardHeader
-              style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
-              subtitle={
-                <div>
-                  {(comments[post.id].length > 0) && (
-                    comments[post.id].sort(sortBy('-voteScore'))
-                      .map(comment => {
-                        return <Comment key={comment.id} comment={comment} />
-                    })
-                  )}
-                  <AddComment parentId={post.id} />
-                </div>
-              }
-              textStyle={{display: 'contents'}}
-            />
-          </div>
-        )}
+        <CardHeader
+          style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
+          subtitle={
+            <div>
+              {/* {(comments[post.id].length > 0) && (
+                comments[post.id].sort(sortBy('-voteScore'))
+                  .map(comment => {
+                    return <Comment key={comment.id} comment={comment} />
+                })
+              )} */}
+              {/* <AddComment parentId={post.id} /> */}
+            </div>
+          }
+          textStyle={{display: 'contents'}}
+        />
       </Card>
     )
   }
@@ -141,7 +124,8 @@ class Post extends Component{
 
 function mapStateToProps(state){
   return {
-    ...state
+    ...state,
+    comments: state.comments
   }
 }
 

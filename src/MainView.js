@@ -8,6 +8,13 @@ import FlatButton from 'material-ui/FlatButton'
 import AddPost from './posts/AddPost'
 import sortBy from 'sort-by'
 import CategoriesMenu from './categories/CategoriesMenu'
+import { Link } from 'react-router-dom'
+
+const style = {
+  fontSize: '12px',
+  fontWeight: 500,
+  color: 'rgba(0, 0, 0, 0.54)',
+}
 
 class MainView extends Component {
   state = {
