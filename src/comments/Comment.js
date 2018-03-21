@@ -7,6 +7,16 @@ import FlatButton from 'material-ui/FlatButton'
 import EditComment from './EditComment'
 import RemoveComment from './RemoveComment'
 
+const style = {
+  backgroundColor: {backgroundColor: 'powderblue'},
+  display: {display: 'contents'},
+  avatarBackgrounColor: 'rgb(232, 232, 232)',
+  margin: {margin: '0px 0px 10px 0px'},
+  avatarColor: 'black',
+  fontSize: {fontSize: 8},
+  displayButtons: {display: 'inline-flex'}
+}
+
 class Comment extends Component{
 
   render (){
@@ -17,9 +27,9 @@ class Comment extends Component{
     return (
       <div>
         {(comment.deleted === false) && (
-          <Card style={{backgroundColor: 'powderblue'}}>
+          <Card style={style.backgroundColor}>
             <CardHeader
-              textStyle={{display: 'contents'}}
+              textStyle={style.display}
               subtitle={
                 <div>
                   <div>
@@ -32,9 +42,9 @@ class Comment extends Component{
                 </div>
               }
               avatar={
-                <Avatar backgroundColor={'rgb(232, 232, 232)'} style={{margin: '0px 0px 10px 0px'}} color='black'>
+                <Avatar backgroundColor={style.avatarBackgrounColor} style={style.margin} color={style.avatarColor}>
                   <div>
-                    <div style={{fontSize: 8}}>
+                    <div style={style.fontSize}>
                       Score
                     </div>
                     <div>
@@ -44,7 +54,7 @@ class Comment extends Component{
                 </Avatar>
               }
             />
-            <div style={{display: 'inline-flex'}}>
+            <div style={style.displayButtons}>
               <FlatButton label="Edit" containerElement={
                 <EditComment comment={comment}/>
               }/>

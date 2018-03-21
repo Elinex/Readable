@@ -11,6 +11,8 @@ const style = {
   color: 'rgba(0, 0, 0, 0.54)'
 }
 
+const errorText = 'This field is required'
+
 class EditPost extends Component {
   state = {
     open: false,
@@ -77,7 +79,7 @@ class EditPost extends Component {
             floatingLabelText="Title"
             defaultValue={this.props.post.title}
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
@@ -85,7 +87,7 @@ class EditPost extends Component {
             floatingLabelText="Text"
             defaultValue={this.props.post.body}
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
         </Dialog>

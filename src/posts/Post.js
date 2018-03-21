@@ -8,19 +8,31 @@ import RemovePost from './RemovePost'
 import UpAndDownVote from '../UpAndDownVote'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import * as dataAPI from '../dataAPI'
+import { getCommentsAPI } from '../dataAPI'
 import { getCommentsAction } from '../comments/actions'
 
 const style = {
-  fontSize: '12px',
-  fontWeight: 500,
-  color: 'rgba(0, 0, 0, 0.54)',
+  flatButton: {
+    fontSize: '12px',
+    fontWeight: 500,
+    color: 'rgba(0, 0, 0, 0.54)',
+  },
+  backgroundColor: {backgroundColor: 'snow'},
+  title: {fontSize: 16, fontWeight: 'bold'},
+  headBackgroundColor: {backgroundColor: 'rgb(232, 232, 232)'},
+  avatarBackGroundColor: 'powderblue',
+  avatarColor: 'black',
+  avatarMargin: {margin: '0px 0px 10px 0px'},
+  avatarFontSize: {fontSize: 8},
+  commentCount: {fontSize: '12px', color: 'rgba(0, 0, 0, 0.54)'},
+  display: {display: 'inline-flex'},
+  subtitleDisplay: {display: 'contents'}
 }
 
 class Post extends Component{
 
   componentDidMount(){
-    dataAPI.getCommentsAPI(this.props.post.id)
+    getCommentsAPI(this.props.post.id)
       .then(res =>
         this.props.dispatch(getCommentsAction(this.props.post.id, res))
       )
@@ -31,10 +43,10 @@ class Post extends Component{
     const { post } = this.props
 
     return (
-      <Card style={{backgroundColor: 'snow'}}>
+      <Card style={style.backgroundColor}>
         <CardTitle
           title={post.title}
-          titleStyle={{fontSize: 16, fontWeight: 'bold'}}
+          titleStyle={style.title}
           subtitle={
             <div>
               <div>
@@ -51,12 +63,12 @@ class Post extends Component{
         />
 
         <CardHeader
-          style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
+          style={style.headBackgroundColor}
           subtitle={
             <div>
-              <Avatar backgroundColor={'powderblue'} color='black' style={{margin: '0px 0px 10px 0px'}}>
+              <Avatar backgroundColor={style.avatarBackGroundColor} color={style.avatarColor} style={style.avatarMargin}>
                 <div>
-                  <div style={{fontSize: 8}}>
+                  <div style={style.avatarFontSize}>
                     Score
                   </div>
                   <div>
@@ -66,7 +78,7 @@ class Post extends Component{
               </Avatar>
               <div><b>{post.body}</b></div><br/>
               <div>
-                <div style={{fontSize: '12px', color: 'rgba(0, 0, 0, 0.54)'}}>
+                <div style={style.commentCount}>
                   {(post.commentCount === 0) && (
                     <p>No comments</p>
                   )}
@@ -79,7 +91,7 @@ class Post extends Component{
                 </div>
                 <UpAndDownVote voteScore={post.voteScore} post={post}/>
               </div>
-              <div style={{display: 'inline-flex'}}>
+              <div style={style.display}>
                 <FlatButton label="Edit" containerElement={
                   <EditPost post={post}/>}
                 />
@@ -88,7 +100,7 @@ class Post extends Component{
                 />
                 <FlatButton
                   label='See details'
-                  labelStyle={style}
+                  labelStyle={style.flatButton}
                   containerElement={
                     <Link to={`/${post.category}/${post.id}`}/>
                   }
@@ -96,23 +108,7 @@ class Post extends Component{
               </div>
             </div>
           }
-          textStyle={{display: 'contents'}}
-        />
-
-        <CardHeader
-          style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
-          subtitle={
-            <div>
-              {/* {(comments[post.id].length > 0) && (
-                comments[post.id].sort(sortBy('-voteScore'))
-                  .map(comment => {
-                    return <Comment key={comment.id} comment={comment} />
-                })
-              )} */}
-              {/* <AddComment parentId={post.id} /> */}
-            </div>
-          }
-          textStyle={{display: 'contents'}}
+          textStyle={style.subtitleDisplay}
         />
       </Card>
     )

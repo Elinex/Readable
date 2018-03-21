@@ -9,6 +9,13 @@ import { addPostAction } from './actions'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
+const style = {
+  button: {backgroundColor: 'powderblue', margin: '10px'},
+  fontWeight: {fontWeight: 'bold'}
+}
+
+const errorText = 'This field is required'
+
 class AddPost extends Component {
   state = {
     open: false,
@@ -84,8 +91,8 @@ class AddPost extends Component {
     ]
 
     return (
-      <div style={{backgroundColor: 'powderblue', margin: '0px 10px 0px 10px'}}>
-        <FlatButton label="Add post" labelStyle={{fontWeight: 'bold'}} onClick={this.handleOpen} />
+      <div style={style.button}>
+        <FlatButton label="Add post" labelStyle={style.fontWeight} onClick={this.handleOpen} />
         <Dialog
           title="Add post"
           actions={actions}
@@ -97,26 +104,26 @@ class AddPost extends Component {
             id='title'
             floatingLabelText="Title"
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({title: event.target.value})}
           /><br />
           <TextField
             id='author'
             floatingLabelText="Author"
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({author: event.target.value})}
           /><br />
           <TextField
             id='body'
             floatingLabelText="Text"
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
           <SelectField
             hintText="Post category"
-            errorText="This field is required"
+            errorText={errorText}
             value={this.state.value}
             onChange={this.handleChange}
           >{this.menuItems(this.state.value)}</SelectField><br />

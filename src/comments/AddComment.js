@@ -7,6 +7,13 @@ import * as dataAPI from '../dataAPI'
 import { addCommentAction } from './actions'
 import { connect } from 'react-redux'
 
+const style = {
+  backgroundColor: {backgroundColor: 'rgb(232, 232, 232)'},
+  fontWeight: {fontWeight: 'bold'}
+}
+
+const errorText = 'This field is required'
+
 class AddComment extends Component {
   state = {
     open: false,
@@ -62,8 +69,8 @@ class AddComment extends Component {
     ]
 
     return (
-      <div style={{backgroundColor: 'rgb(232, 232, 232)', display: 'center'}}>
-        <FlatButton labelStyle={{fontWeight: 'bold'}} label="Add comment" onClick={this.handleOpen} />
+      <div style={style.backgroundColor}>
+        <FlatButton labelStyle={style.fontWeight} label="Add comment" onClick={this.handleOpen} />
         <Dialog
           title="Write a new comment"
           actions={actions}
@@ -76,7 +83,7 @@ class AddComment extends Component {
             floatingLabelText="Author"
             defaultValue={this.state.author}
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({author: event.target.value})}
           /><br />
           <TextField
@@ -84,7 +91,7 @@ class AddComment extends Component {
             floatingLabelText="Text"
             defaultValue={this.state.body}
             type="text"
-            errorText="This field is required"
+            errorText={errorText}
             onChange={(event) => this.setState({body: event.target.value})}
           /><br />
         </Dialog>

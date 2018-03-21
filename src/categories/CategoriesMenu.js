@@ -5,6 +5,10 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar'
 
+const style = {
+  fontWeight: {fontWeight: 'bold' }
+}
+
 class CategoriesMenu extends Component{
   state = {
     valueCategory: 'Posts by category'
@@ -21,7 +25,7 @@ class CategoriesMenu extends Component{
         <ToolbarGroup firstChild={true}>
           <DropDownMenu
             value={this.state.valueCategory}
-            style={{fontWeight: 'bold' }}
+            style={style.fontWeight}
             onChange={this.changeCategory}
           >
             <MenuItem value={this.state.valueCategory} primaryText='Posts by category' disabled={true} />

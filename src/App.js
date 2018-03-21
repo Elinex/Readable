@@ -15,6 +15,13 @@ import Comment from './comments/Comment'
 import {CardHeader} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import { Toolbar } from 'material-ui/Toolbar'
+import { getCommentsAPI } from './dataAPI'
+import { getCommentsAction } from './comments/actions'
+
+const style = {
+  backgroundColor: {backgroundColor: 'rgb(232, 232, 232)'},
+  display: {display: 'contents'}
+}
 
 export class App extends Component {
 
@@ -23,9 +30,16 @@ export class App extends Component {
     this.props.getPosts()
   }
 
+  componentDidMount(){
+    this.props.posts.map(post =>
+      getCommentsAPI(post.id)
+        .then(res => this.props.dispatch(getCommentsAction(post.id, res)))
+    )
+  }
+
   render() {
 
-    const { posts } = this.props
+    const { posts, comments } = this.props
 
     return (
       <BrowserRouter>
@@ -45,7 +59,7 @@ export class App extends Component {
                   {posts.map(post =>
                     <Post key={post.id} post ={post} />
                   )}
-                  <FlatButton label="Add new post" containerElement={<AddPost />} />
+                  <FlatButton label="Add post" containerElement={<AddPost />} />
                 </div>
               )}
             />
@@ -65,13 +79,17 @@ export class App extends Component {
                       <div>
                         <CategoriesMenu />
                         <Post post={post}/>
-                        {this.props.comments[post.id].map(comment =>
-                          <CardHeader
-                            key={comment.id}
-                            style={{backgroundColor: 'rgb(232, 232, 232)', margin: '0px 10px 0px 10px'}}
-                            subtitle={<Comment comment={comment} />}
-                            textStyle={{display: 'contents'}}
-                          />
+                        {(comments[post.id] !== undefined) && (
+                          <div>
+                            {comments[post.id].map(comment =>
+                              <CardHeader
+                                key={comment.id}
+                                style={style.backgroundColor}
+                                subtitle={<Comment comment={comment} />}
+                                textStyle={style.display}
+                              />
+                            )}
+                          </div>
                         )}
                         <AddComment parentId={post.id} />
                       </div>
@@ -106,7 +124,7 @@ export class App extends Component {
                     .filter(post => (post.category === match.params.category))
                     .map(post => <Post key={post.id} post ={post} />)
                   }
-                  <FlatButton label="Add new post" containerElement={<AddPost />} />
+                  <FlatButton label="Add post" containerElement={<AddPost />} />
                 </div>
               )}
             />

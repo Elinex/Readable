@@ -5,10 +5,9 @@ import { votePostAction } from './posts/actions'
 import { editCommentAction } from './comments/actions'
 
 const style = {
-  'paddingRight': '10px',
-  'paddingLeft': '10px',
+  paddingRight: '10px',
+  paddingLeft: '10px',
   fontSize: '20px',
-  // color: '#b23ab7'
   color: 'snow',
 }
 
