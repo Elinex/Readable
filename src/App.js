@@ -5,7 +5,7 @@ import Post from './posts/Post'
 import { getPosts } from './posts/actions'
 import AddPost from './posts/AddPost'
 import { connect } from 'react-redux'
-import { Switch, Route, Link, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import SortPostsBy from './SortPostsBy'
 import sortBy from 'sort-by'
 import { getCategories } from './categories/actions'
@@ -17,6 +17,7 @@ import FlatButton from 'material-ui/FlatButton'
 import { Toolbar } from 'material-ui/Toolbar'
 import { getCommentsAPI } from './dataAPI'
 import { getCommentsAction } from './comments/actions'
+import PageNotFound from './PageNotFound'
 
 const style = {
   backgroundColor: {backgroundColor: 'rgb(232, 232, 232)'},
@@ -95,10 +96,7 @@ export class App extends Component {
                       </div>
                     )}
                     {((post.deleted === true) || (post.id === undefined)) && (
-                      <div>
-                        <h2>Page not found</h2>
-                        <center><Link to="/">Return to Home Page</Link></center>
-                      </div>
+                      <PageNotFound />
                     )}
                   </div>
                 )
@@ -128,6 +126,8 @@ export class App extends Component {
                 </div>
               )}
             />
+
+          <Route path='*' component={PageNotFound}/>
 
           </Switch>
         </div>

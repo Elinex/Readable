@@ -24,6 +24,8 @@ class SortPostsBy extends Component {
 
   render() {
 
+    console.log(this.props.posts);
+
     return (
       <ToolbarGroup>
         <DropDownMenu value={this.state.valueSortPosts} style={style}>
