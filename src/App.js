@@ -25,6 +25,9 @@ const style = {
 }
 
 export class App extends Component {
+  state = {
+    valueSortPosts: ''
+  }
 
   componentWillMount(){
     this.props.getCategories()
@@ -36,6 +39,13 @@ export class App extends Component {
       getCommentsAPI(post.id)
         .then(res => this.props.dispatch(getCommentsAction(post.id, res)))
     )
+  }
+
+  sortPosts = (option, value) => {
+    this.setState({
+      valueSortPosts: value
+    })
+    this.props.posts.sort(sortBy(option))
   }
 
   render() {
@@ -55,11 +65,15 @@ export class App extends Component {
                 <div>
                   <Toolbar>
                     <CategoriesMenu />
-                    <SortPostsBy />
+                    <SortPostsBy sortPosts={this.sortPosts}/>
                   </Toolbar>
-                  {posts.map(post =>
-                    <Post key={post.id} post ={post} />
-                  )}
+                  {posts.map(post => {
+                    if (post.deleted === false){
+                      return <Post key={post.id} post ={post} />
+                    } else {
+                      return null
+                    }
+                  })}
                   <FlatButton label="Add post" containerElement={<AddPost />} />
                 </div>
               )}
@@ -116,11 +130,17 @@ export class App extends Component {
                 <div>
                   <Toolbar>
                     <CategoriesMenu />
-                    <SortPostsBy />
+                    <SortPostsBy sortPosts={this.sortPosts}/>
                   </Toolbar>
                   {posts
                     .filter(post => (post.category === match.params.category))
-                    .map(post => <Post key={post.id} post ={post} />)
+                    .map(post => {
+                      if (post.deleted === false){
+                        return <Post key={post.id} post ={post} />
+                      } else {
+                        return null
+                      }
+                    })
                   }
                   <FlatButton label="Add post" containerElement={<AddPost />} />
                 </div>
@@ -136,7 +156,7 @@ export class App extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state){
   return {
     ...state,
     posts: state.posts.sort(sortBy('-voteScore')),
