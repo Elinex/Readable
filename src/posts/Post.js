@@ -32,10 +32,13 @@ const style = {
 class Post extends Component{
 
   componentDidMount(){
-    getCommentsAPI(this.props.post.id)
-      .then(res =>
-        this.props.dispatch(getCommentsAction(this.props.post.id, res))
-      )
+    if (this.props.post.id) {
+      getCommentsAPI(this.props.post.id)
+        .then(res =>
+          this.props.dispatch(getCommentsAction(this.props.post.id, res))
+        )
+    }
+
   }
 
   render(){
